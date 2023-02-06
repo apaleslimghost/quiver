@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import type { Item } from "@prisma/client";
 import { ActionArgs, json } from "@remix-run/node";
-import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { ItemCreateOneSchema } from "prisma/generated/schemas";
-
-const db = new PrismaClient()
+import db from '~/db.server'
 
 export async function loader() {
   const items = await db.item.findMany()
@@ -26,6 +24,7 @@ const ItemView = ({ name, description }: Omit<Item, 'id'>) =>  <li>{name} {descr
 export default function Index() {
   const items = useLoaderData<typeof loader>()
   const navigation = useNavigation()
+  console.log(navigation)
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
