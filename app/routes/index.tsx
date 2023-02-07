@@ -1,8 +1,10 @@
-import type { Item } from "@prisma/client";
+import { Item } from "@prisma/client";
 import { ActionArgs, json } from "@remix-run/node";
 import { Form, Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { ItemCreateOneSchema } from "prisma/generated/schemas";
 import db from '~/db.server'
+import url from "~/url";
+
 
 export async function loader() {
   const items = await db.item.findMany()
@@ -19,9 +21,9 @@ export async function action({ request }: ActionArgs) {
   return null
 }
 
-const ItemView = ({ id, name, description }: Omit<Item, 'id'> & { id?: number }) =>  (
+const ItemView = (item: Item) =>  (
   <li>
-    {id ? <Link to={`/items/${id}`}>{name}</Link> : name}
+    {!Number.isNaN(item.id) ? <Link to={url('item', item)}>{item.name}</Link> : item.name}
   </li>
 )
 
@@ -35,7 +37,7 @@ export default function Index() {
         {items.map(
           item => <ItemView key={item.id} {...item} />
         )}
-        {navigation.formData && <ItemView {...validateItem(navigation.formData).data} />}
+        {navigation.formData && <ItemView {...validateItem(navigation.formData).data} id={NaN} />}
         <li>
           <Form method="post">
             <input name="name" placeholder="name" required />
