@@ -3,7 +3,8 @@ import { useLoaderData } from "@remix-run/react";
 import db from "~/db.server";
 
 export async function loader({ params }: LoaderArgs) {
-	const item = await db.item.findFirstOrThrow({ where: params })
+	if(!params.id) throw new Error(`no id in params ${JSON.stringify(params)}`)
+	const item = await db.item.findFirstOrThrow({ where: { id: parseInt(params.id) } })
 	return json(item)
 }
 
