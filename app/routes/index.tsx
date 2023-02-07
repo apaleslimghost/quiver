@@ -1,6 +1,6 @@
 import type { Item } from "@prisma/client";
 import { ActionArgs, json } from "@remix-run/node";
-import { Form, useLoaderData, useNavigation } from "@remix-run/react";
+import { Form, Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { ItemCreateOneSchema } from "prisma/generated/schemas";
 import db from '~/db.server'
 
@@ -13,18 +13,21 @@ const validateItem = (formData: FormData) => ItemCreateOneSchema.parse({ data: O
 
 export async function action({ request }: ActionArgs) {
   const form = await request.formData()
-  const data = ItemCreateOneSchema.parse({ data: Object.fromEntries(form) })
+  const data = validateItem(form)
   await db.item.create(data)
 
   return null
 }
 
-const ItemView = ({ name, description }: Omit<Item, 'id'>) =>  <li>{name} {description}</li>
+const ItemView = ({ id, name, description }: Omit<Item, 'id'> & { id?: number }) =>  (
+  <li>
+    {id ? <Link to={`/items/${id}`}>{name}</Link> : name}
+  </li>
+)
 
 export default function Index() {
   const items = useLoaderData<typeof loader>()
   const navigation = useNavigation()
-  console.log(navigation)
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
