@@ -1,10 +1,11 @@
 import { json, LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import db from "~/db.server";
+import { coerce } from "~/validate";
 
 export async function loader({ params }: LoaderArgs) {
-	if(!params.id) throw new Error(`no id in params ${JSON.stringify(params)}`)
-	const item = await db.item.findFirstOrThrow({ where: { id: parseInt(params.id) } })
+	const where = coerce({ id: 'number' }, params)
+	const item = await db.item.findFirstOrThrow({ where })
 	return json(item)
 }
 
