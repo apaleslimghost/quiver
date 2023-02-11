@@ -31,6 +31,9 @@ const Schema: z.ZodType<Prisma.ItemScalarWhereWithAggregatesInput> = z
     description: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
+    locationId: z
+      .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+      .optional(),
   })
   .strict();
 

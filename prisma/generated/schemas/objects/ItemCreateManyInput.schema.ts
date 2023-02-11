@@ -7,6 +7,7 @@ const Schema: z.ZodType<Prisma.ItemCreateManyInput> = z
     id: z.number().optional(),
     name: z.string(),
     description: z.string(),
+    locationId: z.number(),
   })
   .strict();
 

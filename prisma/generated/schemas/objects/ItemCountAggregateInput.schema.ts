@@ -7,6 +7,7 @@ const Schema: z.ZodType<Prisma.ItemCountAggregateInputType> = z
     id: z.literal(true).optional(),
     name: z.literal(true).optional(),
     description: z.literal(true).optional(),
+    locationId: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })
   .strict();

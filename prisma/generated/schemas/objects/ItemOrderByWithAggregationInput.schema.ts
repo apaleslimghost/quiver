@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.ItemOrderByWithAggregationInput> = z
     id: z.lazy(() => SortOrderSchema).optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     description: z.lazy(() => SortOrderSchema).optional(),
+    locationId: z.lazy(() => SortOrderSchema).optional(),
     _count: z.lazy(() => ItemCountOrderByAggregateInputObjectSchema).optional(),
     _avg: z.lazy(() => ItemAvgOrderByAggregateInputObjectSchema).optional(),
     _max: z.lazy(() => ItemMaxOrderByAggregateInputObjectSchema).optional(),

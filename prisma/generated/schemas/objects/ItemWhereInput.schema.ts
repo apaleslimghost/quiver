@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
+import { LocationRelationFilterObjectSchema } from './LocationRelationFilter.schema';
+import { LocationWhereInputObjectSchema } from './LocationWhereInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -28,6 +30,15 @@ const Schema: z.ZodType<Prisma.ItemWhereInput> = z
       .optional(),
     description: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    locationId: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    location: z
+      .union([
+        z.lazy(() => LocationRelationFilterObjectSchema),
+        z.lazy(() => LocationWhereInputObjectSchema),
+      ])
       .optional(),
   })
   .strict();
