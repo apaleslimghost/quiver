@@ -2,11 +2,10 @@ import { z } from 'zod';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { ItemUpdateManyWithoutLocationNestedInputObjectSchema } from './ItemUpdateManyWithoutLocationNestedInput.schema';
 import { LocationUpdateOneWithoutChildrenNestedInputObjectSchema } from './LocationUpdateOneWithoutChildrenNestedInput.schema';
-import { LocationUpdateManyWithoutParentNestedInputObjectSchema } from './LocationUpdateManyWithoutParentNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.LocationUpdateInput> = z
+const Schema: z.ZodType<Prisma.LocationUpdateWithoutChildrenInput> = z
   .object({
     name: z
       .union([
@@ -26,10 +25,7 @@ const Schema: z.ZodType<Prisma.LocationUpdateInput> = z
     parent: z
       .lazy(() => LocationUpdateOneWithoutChildrenNestedInputObjectSchema)
       .optional(),
-    children: z
-      .lazy(() => LocationUpdateManyWithoutParentNestedInputObjectSchema)
-      .optional(),
   })
   .strict();
 
-export const LocationUpdateInputObjectSchema = Schema;
+export const LocationUpdateWithoutChildrenInputObjectSchema = Schema;

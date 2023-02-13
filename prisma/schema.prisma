@@ -23,8 +23,11 @@ model Item {
 }
 
 model Location {
-  id          Int    @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String
   items       Item[]
+  parentId    Int?
+  parent      Location?  @relation("LocationParent", references: [id], fields: [parentId])
+  children    Location[] @relation("LocationParent")
 }

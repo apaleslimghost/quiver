@@ -5,8 +5,14 @@ import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.LocationRelationFilter> = z
   .object({
-    is: z.lazy(() => LocationWhereInputObjectSchema).optional(),
-    isNot: z.lazy(() => LocationWhereInputObjectSchema).optional(),
+    is: z
+      .lazy(() => LocationWhereInputObjectSchema)
+      .optional()
+      .nullable(),
+    isNot: z
+      .lazy(() => LocationWhereInputObjectSchema)
+      .optional()
+      .nullable(),
   })
   .strict();
 

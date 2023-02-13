@@ -5,6 +5,7 @@ import type { Prisma } from '@prisma/client';
 const Schema: z.ZodType<Prisma.LocationAvgAggregateInputType> = z
   .object({
     id: z.literal(true).optional(),
+    parentId: z.literal(true).optional(),
   })
   .strict();
 

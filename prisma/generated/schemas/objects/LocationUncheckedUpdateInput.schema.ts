@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { ItemUncheckedUpdateManyWithoutLocationNestedInputObjectSchema } from './ItemUncheckedUpdateManyWithoutLocationNestedInput.schema';
+import { NullableIntFieldUpdateOperationsInputObjectSchema } from './NullableIntFieldUpdateOperationsInput.schema';
+import { LocationUncheckedUpdateManyWithoutParentNestedInputObjectSchema } from './LocationUncheckedUpdateManyWithoutParentNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -27,6 +29,18 @@ const Schema: z.ZodType<Prisma.LocationUncheckedUpdateInput> = z
       .optional(),
     items: z
       .lazy(() => ItemUncheckedUpdateManyWithoutLocationNestedInputObjectSchema)
+      .optional(),
+    parentId: z
+      .union([
+        z.number(),
+        z.lazy(() => NullableIntFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    children: z
+      .lazy(
+        () => LocationUncheckedUpdateManyWithoutParentNestedInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

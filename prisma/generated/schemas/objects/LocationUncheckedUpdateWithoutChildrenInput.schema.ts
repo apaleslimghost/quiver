@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
+import { ItemUncheckedUpdateManyWithoutLocationNestedInputObjectSchema } from './ItemUncheckedUpdateManyWithoutLocationNestedInput.schema';
 import { NullableIntFieldUpdateOperationsInputObjectSchema } from './NullableIntFieldUpdateOperationsInput.schema';
-import { LocationUncheckedUpdateManyWithoutParentNestedInputObjectSchema } from './LocationUncheckedUpdateManyWithoutParentNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutItemsInput> = z
+const Schema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutChildrenInput> = z
   .object({
     id: z
       .union([
@@ -26,6 +26,9 @@ const Schema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutItemsInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    items: z
+      .lazy(() => ItemUncheckedUpdateManyWithoutLocationNestedInputObjectSchema)
+      .optional(),
     parentId: z
       .union([
         z.number(),
@@ -33,12 +36,7 @@ const Schema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutItemsInput> = z
       ])
       .optional()
       .nullable(),
-    children: z
-      .lazy(
-        () => LocationUncheckedUpdateManyWithoutParentNestedInputObjectSchema,
-      )
-      .optional(),
   })
   .strict();
 
-export const LocationUncheckedUpdateWithoutItemsInputObjectSchema = Schema;
+export const LocationUncheckedUpdateWithoutChildrenInputObjectSchema = Schema;

@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.LocationOrderByWithAggregationInput> = z
     id: z.lazy(() => SortOrderSchema).optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     description: z.lazy(() => SortOrderSchema).optional(),
+    parentId: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => LocationCountOrderByAggregateInputObjectSchema)
       .optional(),
