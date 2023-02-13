@@ -12,13 +12,15 @@
     "@remix-run/node": "^1.12.0",
     "@remix-run/react": "^1.12.0",
     "@remix-run/serve": "^1.12.0",
+    "@zxing/library": "^0.19.2",
     "bwip-js": "^3.2.2",
     "isbot": "^3.6.5",
     "pluralize": "^8.0.0",
     "prisma": "^4.9.0",
     "prisma-zod-generator": "^0.8.11",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-zxing": "1.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.12.0",

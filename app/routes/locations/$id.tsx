@@ -16,8 +16,8 @@ export async function loader({ params }: LoaderArgs) {
 	})
 
 	const barcode = (await generate2DBarcode({
-		bcid: 'aztecrune',
-		text: location.id.toString()
+		bcid: 'azteccodecompact',
+		text: url('location', location)
 	})).toString('base64')
 
 	return json({location, barcode})
