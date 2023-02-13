@@ -1,6 +1,5 @@
 import { ActionArgs, json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { LocationCreateOneSchema } from "prisma/generated/schemas";
 import { z } from "zod";
 import dbServer from "~/db.server";
 import url from "~/url";
