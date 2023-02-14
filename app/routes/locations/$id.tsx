@@ -18,18 +18,7 @@ export async function loader({ params }: LoaderArgs) {
 	const [location, descendents, barcode] = await Promise.all([
 		db.location.findFirstOrThrow({ where, include: { items: true } }),
 
-		db.$queryRaw<Location[]>`
-			WITH RECURSIVE descendents AS (
-				SELECT id, name, "parentId"
-				FROM "Location"
-				WHERE "parentId" = ${where.id}
-				UNION ALL
-				SELECT l.id, l.name, l."parentId"
-				FROM "Location" l
-				JOIN descendents cs ON cs.id = l."parentId"
-			)
-			SELECT * FROM descendents;
-		`,
+		queries.descendents(where.id),
 
 		generate2DBarcode({
 			bcid: 'azteccodecompact',
