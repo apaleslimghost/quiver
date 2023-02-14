@@ -1,10 +1,14 @@
 import { json, LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import db from "~/db.server";
-import { coerce } from "~/validate";
+import {z} from 'zod'
+
+const ItemParamsSchema = z.object({
+	id: z.coerce.number()
+})
 
 export async function loader({ params }: LoaderArgs) {
-	const where = coerce({ id: 'number' }, params)
+	const where = ItemParamsSchema.parse(params)
 	const item = await db.item.findFirstOrThrow({ where })
 	return json(item)
 }

@@ -1,16 +1,20 @@
 import { json, LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import db from "~/db.server";
-import { coerce } from "~/validate";
 import url from "~/url";
 import generate2DBarcode from "~/barcode.server";
 import {Location} from '@prisma/client'
+import {z} from 'zod'
+
+const LocationParamsSchema = z.object({
+	id: z.coerce.number()
+})
 
 export async function loader({ params }: LoaderArgs) {
-	const where = coerce({ id: 'number' }, params)
-	const location = await db.location.findFirstOrThrow({
-		where,
+	const where = LocationParamsSchema.parse(params)
 
+	const location = await db.location.findFirstOrThrow({
+		where
 	})
 
 	const ancestors = location.parentId ? await db.$queryRaw<Location[]>`
