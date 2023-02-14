@@ -1,8 +1,8 @@
 import { json, LoaderArgs, LoaderFunction, TypedResponse } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
-import db from "~/db.server";
-import url from "~/url";
-import generate2DBarcode from "~/barcode.server";
+import db from "~/lib/db.server";
+import url from "~/lib/url";
+import generate2DBarcode from "~/lib/barcode.server";
 import {Location} from '@prisma/client'
 import {z} from 'zod'
 

@@ -2,8 +2,8 @@ import { Item } from "@prisma/client";
 import { ActionArgs, json } from "@remix-run/node";
 import { Form, Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { ItemCreateOneSchema } from "prisma/generated/schemas";
-import db from '~/db.server'
-import url from "~/url";
+import db from '~/lib/db.server'
+import url from "~/lib/url";
 import { z } from "zod";
 
 export async function loader() {

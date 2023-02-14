@@ -1,6 +1,6 @@
 import { json, LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import db from "~/db.server";
+import db from "~/lib/db.server";
 import {z} from 'zod'
 
 const ItemParamsSchema = z.object({
