@@ -13,9 +13,27 @@ const LocationParamsSchema = z.object({
 export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
 
-	const location = await db.location.findFirstOrThrow({
-		where
-	})
+	const [location, descendents, barcode] = await Promise.all([
+		db.location.findFirstOrThrow({ where }),
+
+		db.$queryRaw<Location[]>`
+			WITH RECURSIVE descendents AS (
+				SELECT id, name, "parentId"
+				FROM "Location"
+				WHERE "parentId" = ${where.id}
+				UNION ALL
+				SELECT l.id, l.name, l."parentId"
+				FROM "Location" l
+				JOIN descendents cs ON cs.id = l."parentId"
+			)
+			SELECT * FROM descendents;
+		`,
+
+		(await generate2DBarcode({
+			bcid: 'azteccodecompact',
+			text: url('location', where)
+		})).toString('base64')
+	])
 
 	const ancestors = location.parentId ? await db.$queryRaw<Location[]>`
 		WITH RECURSIVE ancestors AS (
@@ -29,24 +47,6 @@ export async function loader({ params }: LoaderArgs) {
 		)
 		SELECT * FROM ancestors;
 	` : []
-
-	const descendents = await db.$queryRaw<Location[]>`
-		WITH RECURSIVE descendents AS (
-			SELECT id, name, "parentId"
-			FROM "Location"
-			WHERE "parentId" = ${location.id}
-			UNION ALL
-			SELECT l.id, l.name, l."parentId"
-			FROM "Location" l
-			JOIN descendents cs ON cs.id = l."parentId"
-		)
-		SELECT * FROM descendents;
-	`
-
-	const barcode = (await generate2DBarcode({
-		bcid: 'azteccodecompact',
-		text: url('location', location)
-	})).toString('base64')
 
 	return json({location, barcode, descendents, ancestors})
 }
