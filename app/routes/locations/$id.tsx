@@ -5,6 +5,8 @@ import url from "~/lib/url";
 import generate2DBarcode from "~/lib/barcode.server";
 import {Location} from '@prisma/client'
 import {z} from 'zod'
+import { Breadcrumbs } from "~/components/location/breadcrumbs";
+import * as queries from "~/lib/queries";
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
@@ -35,32 +37,16 @@ export async function loader({ params }: LoaderArgs) {
 		}).then(buffer => buffer.toString('base64')),
 	])
 
-	const ancestors = location.parentId ? (await db.$queryRaw<Location[]>`
-		WITH RECURSIVE ancestors AS (
-			SELECT id, name, "parentId"
-			FROM "Location"
-			WHERE id = ${location.parentId}
-			UNION ALL
-			SELECT l.id, l.name, l."parentId"
-			FROM "Location" l
-			JOIN ancestors a ON a."parentId" = l.id
-		)
-		SELECT * FROM ancestors;
-	`).reverse() : []
+	const ancestors = location.parentId ? (await queries.ancestors(location.parentId)).reverse() : []
 
 	return json({location, barcode, descendents, ancestors})
 }
 
 export default function LocationPage() {
-	const {location, barcode, descendents, ancestors, items} = useLoaderData<typeof loader>()
+	const {location, barcode, descendents, ancestors} = useLoaderData<typeof loader>()
 
 	return <div>
-		{ancestors.length > 0 && <ul>
-			{ancestors.map(ancestor => <li key={ancestor.id}>
-				<Link to={url('location', ancestor)}>{ancestor.name}</Link>
-			</li>)}
-			</ul>
-		}
+		<Breadcrumbs ancestors={ancestors} />
 		<h1>{location.name}</h1>
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
 
