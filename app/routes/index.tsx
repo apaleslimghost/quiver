@@ -4,19 +4,37 @@ import { Form, Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { ItemCreateOneSchema } from "prisma/generated/schemas";
 import db from '~/db.server'
 import url from "~/url";
-
+import { z } from "zod";
 
 export async function loader() {
-  const items = await db.item.findMany()
-  return json(items)
+  const [items, locations] = await Promise.all([
+    db.item.findMany(),
+    db.location.findMany()
+  ])
+
+  return json({items, locations})
 }
 
-const validateItem = (formData: FormData) => ItemCreateOneSchema.parse({ data: Object.fromEntries(formData) })
+const ItemFormSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  locationId: z.coerce.number()
+})
 
 export async function action({ request }: ActionArgs) {
   const form = await request.formData()
-  const data = validateItem(form)
-  await db.item.create(data)
+  const {locationId, ...data} = ItemFormSchema.parse(Object.fromEntries(form))
+
+  await db.item.create({
+    data: {
+      ...data,
+      location: {
+        connect: {
+          id: locationId
+        }
+      }
+    }
+  })
 
   return null
 }
@@ -28,7 +46,7 @@ const ItemView = (item: Item) =>  (
 )
 
 export default function Index() {
-  const items = useLoaderData<typeof loader>()
+  const {items, locations} = useLoaderData<typeof loader>()
   const navigation = useNavigation()
 
   return (
@@ -37,11 +55,15 @@ export default function Index() {
         {items.map(
           item => <ItemView key={item.id} {...item} />
         )}
-        {navigation.formData && <ItemView {...validateItem(navigation.formData).data} id={NaN} />}
+        {navigation.formData && <ItemView {...ItemFormSchema.parse(Object.fromEntries(navigation.formData))} id={NaN} />}
         <li>
           <Form method="post">
             <input name="name" placeholder="name" required />
             <input name="description" placeholder="description" required />
+            <select name="locationId">
+              <option disabled selected>Location...</option>
+              {locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
+            </select>
             <input type="submit" />
           </Form>
         </li>

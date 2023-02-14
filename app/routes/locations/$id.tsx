@@ -1,5 +1,5 @@
-import { json, LoaderArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { json, LoaderArgs, LoaderFunction, TypedResponse } from "@remix-run/node";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import db from "~/db.server";
 import url from "~/url";
 import generate2DBarcode from "~/barcode.server";
@@ -14,7 +14,7 @@ export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
 
 	const [location, descendents, barcode] = await Promise.all([
-		db.location.findFirstOrThrow({ where }),
+		db.location.findFirstOrThrow({ where, include: { items: true } }),
 
 		db.$queryRaw<Location[]>`
 			WITH RECURSIVE descendents AS (
@@ -29,13 +29,13 @@ export async function loader({ params }: LoaderArgs) {
 			SELECT * FROM descendents;
 		`,
 
-		(await generate2DBarcode({
+		generate2DBarcode({
 			bcid: 'azteccodecompact',
 			text: url('location', where)
-		})).toString('base64')
+		}).then(buffer => buffer.toString('base64')),
 	])
 
-	const ancestors = location.parentId ? await db.$queryRaw<Location[]>`
+	const ancestors = location.parentId ? (await db.$queryRaw<Location[]>`
 		WITH RECURSIVE ancestors AS (
 			SELECT id, name, "parentId"
 			FROM "Location"
@@ -46,13 +46,13 @@ export async function loader({ params }: LoaderArgs) {
 			JOIN ancestors a ON a."parentId" = l.id
 		)
 		SELECT * FROM ancestors;
-	` : []
+	`).reverse() : []
 
 	return json({location, barcode, descendents, ancestors})
 }
 
 export default function LocationPage() {
-	const {location, barcode, descendents, ancestors} = useLoaderData<typeof loader>()
+	const {location, barcode, descendents, ancestors, items} = useLoaderData<typeof loader>()
 
 	return <div>
 		{ancestors.length > 0 && <ul>
@@ -63,6 +63,12 @@ export default function LocationPage() {
 		}
 		<h1>{location.name}</h1>
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
+
+		<ul>
+			{ location.items.map(item => <li key={item.id}>
+				<Link to={url('item', item)}>{item.name}</Link>
+			</li>) }
+		</ul>
 
 		<img src={`data:image/png;base64,${barcode}`} alt="" />
 	</div>
