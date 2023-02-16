@@ -1,6 +1,6 @@
-import { Item } from "@prisma/client";
 import { json } from "@remix-run/node";
-import { Form, Link, useFetcher, useLoaderData, useNavigation } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
+import { ItemLink } from "~/components/item/link";
 import db from '~/lib/db.server'
 import url from "~/lib/url";
 import { ItemFormSchema } from "./items/new";
@@ -14,12 +14,6 @@ export async function loader() {
   return json({items, locations})
 }
 
-const ItemView = (item: Item) =>  (
-  <li>
-    {!Number.isNaN(item.id) ? <Link to={url('item', item)}>{item.name}</Link> : item.name}
-  </li>
-)
-
 export default function Index() {
   const {items, locations} = useLoaderData<typeof loader>()
   const newItem = useFetcher()
@@ -28,9 +22,13 @@ export default function Index() {
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <ul>
         {items.map(
-          item => <ItemView key={item.id} {...item} />
+          item => <li key={item.id}>
+            <ItemLink {...item} />
+          </li>
         )}
-        {newItem.submission && <ItemView {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />}
+        {newItem.submission && <li>
+          <ItemLink {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />
+        </li>}
         <li>
           <newItem.Form method="post" action={url('item', 'new')}>
             <input name="name" placeholder="name" required />

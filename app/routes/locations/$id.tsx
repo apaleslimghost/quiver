@@ -1,5 +1,5 @@
 import { json, LoaderArgs, LoaderFunction, TypedResponse } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useFetcher, useLoaderData } from "@remix-run/react";
 import db from "~/lib/db.server";
 import url from "~/lib/url";
 import generate2DBarcode from "~/lib/barcode.server";
@@ -7,6 +7,8 @@ import {Location} from '@prisma/client'
 import {z} from 'zod'
 import { Breadcrumbs } from "~/components/location/breadcrumbs";
 import * as queries from "~/lib/queries";
+import { ItemLink } from "~/components/item/link";
+import { ItemFormSchema } from "../items/new";
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
@@ -33,6 +35,7 @@ export async function loader({ params }: LoaderArgs) {
 
 export default function LocationPage() {
 	const {location, barcode, descendents, ancestors} = useLoaderData<typeof loader>()
+	const newItem = useFetcher()
 
 	return <div>
 		<Breadcrumbs ancestors={ancestors} />
@@ -41,15 +44,27 @@ export default function LocationPage() {
 
 		<ul>
 			{ location.items.map(item => <li key={item.id}>
-				<Link to={url('item', item)}>{item.name}</Link>
+				<ItemLink {...item} />
 			</li>) }
 
-			<Form method='post' action={url('item', 'new')}>
-				<input name="name" type="text" required />
-				<input name="description" type="text" required />
-				<input name="locationId" type="hidden" value={location.id} />
-				<input type="submit" />
-			</Form>
+			{newItem.submission && <li>
+				<ItemLink {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />
+			</li>}
+
+			<li>
+				<newItem.Form method='post' action={url('item', 'new')}>
+					<input name="name" type="text" required />
+					<input name="description" type="text" required />
+					<input name="locationId" type="hidden" value={location.id} />
+					<input type="hidden" name="submitInline" value="true" />
+					<input type="submit" onClick={event => {
+					event.preventDefault()
+					if(event.target instanceof HTMLInputElement) {
+						newItem.submit(event.target.form)
+					}
+					}} />
+				</newItem.Form>
+			</li>
 		</ul>
 
 		<img src={`data:image/png;base64,${barcode}`} alt="" />
