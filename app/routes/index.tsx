@@ -22,7 +22,6 @@ const ItemView = (item: Item) =>  (
 
 export default function Index() {
   const {items, locations} = useLoaderData<typeof loader>()
-  const navigation = useNavigation()
   const newItem = useFetcher()
 
   return (
@@ -31,7 +30,7 @@ export default function Index() {
         {items.map(
           item => <ItemView key={item.id} {...item} />
         )}
-        {navigation.formData && <ItemView {...ItemFormSchema.parse(Object.fromEntries(navigation.formData))} id={NaN} />}
+        {newItem.submission && <ItemView {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />}
         <li>
           <newItem.Form method="post" action={url('item', 'new')}>
             <input name="name" placeholder="name" required />
