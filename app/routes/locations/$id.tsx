@@ -43,6 +43,13 @@ export default function LocationPage() {
 			{ location.items.map(item => <li key={item.id}>
 				<Link to={url('item', item)}>{item.name}</Link>
 			</li>) }
+
+			<Form method='post' action={url('item', 'new')}>
+				<input name="name" type="text" required />
+				<input name="description" type="text" required />
+				<input name="locationId" type="hidden" value={location.id} />
+				<input type="submit" />
+			</Form>
 		</ul>
 
 		<img src={`data:image/png;base64,${barcode}`} alt="" />
