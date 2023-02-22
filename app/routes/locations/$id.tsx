@@ -14,6 +14,10 @@ const LocationParamsSchema = z.object({
 	id: z.coerce.number()
 })
 
+export const handle = {
+	layout: 'docs'
+}
+
 export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
 

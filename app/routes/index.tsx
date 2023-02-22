@@ -19,34 +19,32 @@ export default function Index() {
   const newItem = useFetcher()
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <ul>
-        {items.map(
-          item => <li key={item.id}>
-            <ItemLink {...item} />
-          </li>
-        )}
-        {newItem.submission && <li>
-          <ItemLink {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />
-        </li>}
-        <li>
-          <newItem.Form method="post" action={url('item', 'new')}>
-            <input name="name" placeholder="name" required />
-            <input name="description" placeholder="description" required />
-            <select name="locationId">
-              <option disabled selected>Location...</option>
-              {locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
-            </select>
-            <input type="hidden" name="submitInline" value="true" />
-            <input type="submit" onClick={event => {
-              event.preventDefault()
-              if(event.target instanceof HTMLInputElement) {
-                newItem.submit(event.target.form)
-              }
-            }} />
-          </newItem.Form>
+    <ul>
+      {items.map(
+        item => <li key={item.id}>
+          <ItemLink {...item} />
         </li>
-      </ul>
-    </div>
+      )}
+      {newItem.submission && <li>
+        <ItemLink {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />
+      </li>}
+      <li>
+        <newItem.Form method="post" action={url('item', 'new')}>
+          <input name="name" placeholder="name" required />
+          <input name="description" placeholder="description" required />
+          <select name="locationId">
+            <option disabled selected>Location...</option>
+            {locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
+          </select>
+          <input type="hidden" name="submitInline" value="true" />
+          <input type="submit" onClick={event => {
+            event.preventDefault()
+            if(event.target instanceof HTMLInputElement) {
+              newItem.submit(event.target.form)
+            }
+          }} />
+        </newItem.Form>
+      </li>
+    </ul>
   );
 }
