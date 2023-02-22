@@ -1,4 +1,17 @@
+$_o-typography-sans: 'Work Sans';
 $o-brand: 'internal';
+
+@import '@financial-times/o-fonts/main';
+
+@include oFontsDefineCustomFont('Work Sans', (
+	(weight: regular, style: normal),
+	(weight: semibold, style: normal),
+	(weight: regular, style: italic),
+	(weight: semibold, style: italic)
+)) {
+	@import url(https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,900;1,400;1,900&display=swap);
+}
+
 @import '@financial-times/o-layout/main';
 
 @include oLayout();

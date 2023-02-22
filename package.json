@@ -10,6 +10,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@financial-times/o-fonts": "^5.3.4",
     "@financial-times/o-header-services": "^5.3.3",
     "@financial-times/o-layout": "^5.3.1",
     "@prisma/client": "^4.9.0",

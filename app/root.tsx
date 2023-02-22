@@ -12,7 +12,9 @@ import {
 import styles from '~/css/main.css';
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+  ];
 }
 
 export const meta: MetaFunction = () => ({
