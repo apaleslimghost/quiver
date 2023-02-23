@@ -2,12 +2,12 @@ import { json, LoaderArgs, LoaderFunction, TypedResponse } from "@remix-run/node
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import db from "~/lib/db.server";
 import url from "~/lib/url";
-import generate2DBarcode from "~/lib/barcode.server";
 import {z} from 'zod'
 import { Breadcrumbs } from "~/components/location/breadcrumbs";
 import * as queries from "~/lib/queries";
 import { ItemLink } from "~/components/item/link";
 import { ItemFormSchema } from "../items/new";
+import BwipJs from "bwip-js";
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
@@ -25,7 +25,7 @@ export async function loader({ params }: LoaderArgs) {
 
 		queries.descendents(where.id),
 
-		generate2DBarcode({
+		BwipJs.toBuffer({
 			bcid: 'azteccodecompact',
 			text: url('location', where)
 		}).then(buffer => buffer.toString('base64')),
