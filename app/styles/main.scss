@@ -1,4 +1,5 @@
 $_o-typography-sans: 'Work Sans';
+$system-code: 'no';
 $o-brand: 'internal';
 
 @import '@financial-times/o-fonts/main';
@@ -13,5 +14,7 @@ $o-brand: 'internal';
 }
 
 @import '@financial-times/o-layout/main';
+@import '@financial-times/o-header-services/main';
 
 @include oLayout();
+@include oHeaderServices();
