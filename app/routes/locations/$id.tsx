@@ -3,7 +3,6 @@ import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import db from "~/lib/db.server";
 import url from "~/lib/url";
 import {z} from 'zod'
-import { Breadcrumbs } from "~/components/location/breadcrumbs";
 import * as queries from "~/lib/queries";
 import { ItemLink } from "~/components/item/link";
 import { ItemFormSchema } from "../items/new";
@@ -27,7 +26,7 @@ export async function loader({ params }: LoaderArgs) {
 
 		BwipJs.toBuffer({
 			bcid: 'azteccodecompact',
-			text: url('location', where)
+			text: where.id.toString()
 		}).then(buffer => buffer.toString('base64')),
 	])
 
@@ -37,11 +36,10 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 export default function LocationPage() {
-	const {location, barcode, descendents, ancestors} = useLoaderData<typeof loader>()
+	const {location, barcode, descendents} = useLoaderData<typeof loader>()
 	const newItem = useFetcher()
 
 	return <div>
-		<Breadcrumbs ancestors={ancestors} />
 		<h1>{location.name}</h1>
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
 

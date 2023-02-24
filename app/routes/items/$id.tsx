@@ -3,7 +3,6 @@ import { useLoaderData } from "@remix-run/react";
 import db from "~/lib/db.server";
 import {z} from 'zod'
 import * as queries from "~/lib/queries";
-import { Breadcrumbs } from "~/components/location/breadcrumbs";
 
 const ItemParamsSchema = z.object({
 	id: z.coerce.number()
@@ -17,10 +16,9 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 export default function Item() {
-	const {item, ancestors} = useLoaderData<typeof loader>()
+	const {item} = useLoaderData<typeof loader>()
 
-	return <div>
-		<Breadcrumbs ancestors={ancestors} />
+	return <>
 		<h1>{item.name}</h1>
-	</div>
+	</>
 }
