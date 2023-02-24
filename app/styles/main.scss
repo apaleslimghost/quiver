@@ -18,3 +18,11 @@ $o-brand: 'internal';
 
 @include oLayout();
 @include oHeaderServices();
+
+.location__barcode {
+	display: inline-block;
+	height: 1em;
+	width: 1em;
+	margin-right: 0.5ex;
+	vertical-align: bottom;
+}

@@ -39,8 +39,11 @@ export default function LocationPage() {
 	const {location, barcode, descendents} = useLoaderData<typeof loader>()
 	const newItem = useFetcher()
 
-	return <div>
-		<h1>{location.name}</h1>
+	return <>
+		<h1>
+			<img className='location__barcode' src={`data:image/png;base64,${barcode}`} alt="" />
+			{location.name}
+		</h1>
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
 
 		<ul>
@@ -67,7 +70,5 @@ export default function LocationPage() {
 				</newItem.Form>
 			</li>
 		</ul>
-
-		<img src={`data:image/png;base64,${barcode}`} alt="" />
-	</div>
+	</>
 }
