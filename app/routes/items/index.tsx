@@ -3,7 +3,7 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import { ItemLink } from "~/components/item/link";
 import db from '~/lib/db.server'
 import url from "~/lib/url";
-import { ItemFormSchema } from "./items/new";
+import { ItemFormSchema } from "./new";
 
 export async function loader() {
   const [items, locations] = await Promise.all([
