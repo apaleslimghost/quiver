@@ -4,16 +4,17 @@ import { z } from "zod";
 import dbServer from "~/lib/db.server";
 import url from "~/lib/url";
 
-const LocationFormSchema = z.object({
+export const LocationFormSchema = z.object({
 	name: z.string(),
 	description: z.string(),
-	parentId: z.coerce.number().optional()
+	parentId: z.coerce.number().optional(),
+	submitInline: z.coerce.boolean().default(false)
 })
 
 export async function action({request}: ActionArgs) {
 	const form = Object.fromEntries(await request.formData())
 
-	const { parentId, ...data } = LocationFormSchema.parse(form)
+	const { parentId, submitInline, ...data } = LocationFormSchema.parse(form)
 
 	const location = await dbServer.location.create({
 		data: {
@@ -26,7 +27,11 @@ export async function action({request}: ActionArgs) {
 		}
 	})
 
-	return redirect(url('location', location))
+	if(submitInline) {
+		return null
+	} else {
+		return redirect(url('location', location))
+	}
 }
 
 export async function loader() {
