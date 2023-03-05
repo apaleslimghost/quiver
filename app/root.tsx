@@ -1,4 +1,4 @@
-import { Location } from "@prisma/client";
+import type { Location } from "@prisma/client";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
@@ -10,14 +10,12 @@ import {
   ScrollRestoration,
   useMatches,
 } from "@remix-run/react";
-import { FC } from "react";
+import type { FC } from "react";
 
-import styles from '~/css/main.css';
 import { Breadcrumbs } from "./components/location/breadcrumbs";
 
 export function links() {
   return [
-    { rel: "stylesheet", href: styles },
   ];
 }
 
