@@ -1,21 +1,19 @@
-import type { Location } from "@prisma/client";
 import type { MetaFunction } from "@remix-run/node";
 import {
-  Link,
+
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useMatches,
 } from "@remix-run/react";
-import type { FC } from "react";
 
-import { Breadcrumbs } from "./components/location/breadcrumbs";
+import styles from './tailwind.css'
 
 export function links() {
   return [
+    { rel: "stylesheet", href: styles },
   ];
 }
 

@@ -7,6 +7,8 @@ import * as queries from "~/lib/queries";
 import { ItemLink } from "~/components/item/link";
 import { ItemFormSchema } from "../items/new";
 import BwipJs from "bwip-js";
+import { ItemCard } from "~/components/item/card";
+import { Card } from "react-daisyui";
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
@@ -46,29 +48,30 @@ export default function LocationPage() {
 		</h1>
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
 
-		<ul>
-			{ location.items.map(item => <li key={item.id}>
-				<ItemLink {...item} />
-			</li>) }
+		<div className="grid grid-flow-col auto-cols-max">
+			{ location.items.map(item => <ItemCard key={item.id} item={item} />) }
 
-			{newItem.submission && <li>
-				<ItemLink {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />
-			</li>}
+			{newItem.submission && <ItemCard item={{
+				...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData)),
+				id: NaN
+			}} />}
 
-			<li>
-				<newItem.Form method='post' action={url('item', 'new')}>
-					<input name="name" type="text" required />
-					<input name="description" type="text" required />
-					<input name="locationId" type="hidden" value={location.id} />
-					<input type="hidden" name="submitInline" value="true" />
-					<input type="submit" onClick={event => {
-					event.preventDefault()
-					if(event.target instanceof HTMLInputElement) {
-						newItem.submit(event.target.form)
-					}
-					}} />
-				</newItem.Form>
-			</li>
-		</ul>
+			<Card>
+				<Card.Body>
+					<newItem.Form method='post' action={url('item', 'new')}>
+						<input name="name" type="text" required />
+						<input name="description" type="text" required />
+						<input name="locationId" type="hidden" value={location.id} />
+						<input type="hidden" name="submitInline" value="true" />
+						<input type="submit" onClick={event => {
+						event.preventDefault()
+						if(event.target instanceof HTMLInputElement) {
+							newItem.submit(event.target.form)
+						}
+						}} />
+					</newItem.Form>
+				</Card.Body>
+			</Card>
+		</div>
 	</>
 }
