@@ -19,6 +19,7 @@
     "bwip-js": "^3.2.2",
     "isbot": "^3.6.5",
     "pluralize": "^8.0.0",
+    "polished": "^4.2.2",
     "prisma": "^4.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -8,8 +8,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import * as typography from './components/typography/typography.css'
 import { cssBundleHref } from "@remix-run/css-bundle";
-import './test.css'
 
 export function links() {
   return [
@@ -30,7 +30,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className={typography.main}>
         <main>
           <Outlet />
         </main>

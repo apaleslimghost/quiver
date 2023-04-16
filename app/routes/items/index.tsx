@@ -1,6 +1,7 @@
 import { json } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { ItemLink } from "~/components/item/link";
+import { Heading } from "~/components/typography/heading";
 import db from '~/lib/db.server'
 import url from "~/lib/url";
 import { ItemFormSchema } from "./new";
@@ -19,7 +20,7 @@ export default function Index() {
   const newItem = useFetcher()
 
   return <>
-    <h1>All items</h1>
+    <Heading level={1}>All items</Heading>
     <ul>
       {items.map(
         item => <li key={item.id}>
