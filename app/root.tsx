@@ -1,6 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
 import {
-
   Links,
   LiveReload,
   Meta,
@@ -9,11 +8,12 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import styles from './tailwind.css'
+import { cssBundleHref } from "@remix-run/css-bundle";
+import './test.css'
 
 export function links() {
   return [
-    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: cssBundleHref },
   ];
 }
 

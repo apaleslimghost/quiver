@@ -8,7 +8,6 @@ import { ItemLink } from "~/components/item/link";
 import { ItemFormSchema } from "../items/new";
 import BwipJs from "bwip-js";
 import { ItemCard } from "~/components/item/card";
-import { Card } from "react-daisyui";
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
@@ -56,22 +55,20 @@ export default function LocationPage() {
 				id: NaN
 			}} />}
 
-			<Card>
-				<Card.Body>
-					<newItem.Form method='post' action={url('item', 'new')}>
-						<input name="name" type="text" required />
-						<input name="description" type="text" required />
-						<input name="locationId" type="hidden" value={location.id} />
-						<input type="hidden" name="submitInline" value="true" />
-						<input type="submit" onClick={event => {
-						event.preventDefault()
-						if(event.target instanceof HTMLInputElement) {
-							newItem.submit(event.target.form)
-						}
-						}} />
-					</newItem.Form>
-				</Card.Body>
-			</Card>
+			<div>
+				<newItem.Form method='post' action={url('item', 'new')}>
+					<input name="name" type="text" required />
+					<input name="description" type="text" required />
+					<input name="locationId" type="hidden" value={location.id} />
+					<input type="hidden" name="submitInline" value="true" />
+					<input type="submit" onClick={event => {
+					event.preventDefault()
+					if(event.target instanceof HTMLInputElement) {
+						newItem.submit(event.target.form)
+					}
+					}} />
+				</newItem.Form>
+			</div>
 		</div>
 	</>
 }

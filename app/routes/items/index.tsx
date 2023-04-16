@@ -18,7 +18,8 @@ export default function Index() {
   const {items, locations} = useLoaderData<typeof loader>()
   const newItem = useFetcher()
 
-  return (
+  return <>
+    <h1>All items</h1>
     <ul>
       {items.map(
         item => <li key={item.id}>
@@ -32,9 +33,15 @@ export default function Index() {
         <newItem.Form method="post" action={url('item', 'new')}>
           <input name="name" placeholder="name" required />
           <input name="description" placeholder="description" required />
-          <select name="locationId" defaultValue={undefined}>
-            <option disabled value={undefined}>Location...</option>
-            {locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
+          <select name="locationId">
+            <option disabled selected>Location...</option>
+            <>
+              {locations.map(
+                location => <option key={location.id} value={location.id}>
+                  {location.name}
+                </option>
+              )}
+            </>
           </select>
           <input type="hidden" name="submitInline" value="true" />
           <input type="submit" onClick={event => {
@@ -46,5 +53,5 @@ export default function Index() {
         </newItem.Form>
       </li>
     </ul>
-  );
+  </>
 }

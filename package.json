@@ -10,17 +10,17 @@
   },
   "dependencies": {
     "@prisma/client": "^4.9.0",
+    "@remix-run/css-bundle": "^1.15.0",
     "@remix-run/node": "^1.14.0",
     "@remix-run/react": "^1.14.0",
     "@remix-run/serve": "^1.14.0",
+    "@vanilla-extract/css": "^1.11.0",
     "@zxing/library": "^0.19.2",
     "bwip-js": "^3.2.2",
-    "daisyui": "^2.51.3",
     "isbot": "^3.6.5",
     "pluralize": "^8.0.0",
     "prisma": "^4.9.0",
     "react": "^18.2.0",
-    "react-daisyui": "^3.0.3",
     "react-dom": "^18.2.0",
     "react-zxing": "1.0",
     "zod": "^3.20.6"
@@ -34,7 +34,6 @@
     "@types/react-dom": "^18.0.8",
     "eslint": "^8.27.0",
     "npm-run-all": "^4.1.5",
-    "tailwindcss": "^3.2.7",
     "typescript": "^4.8.4"
   },
   "engines": {
