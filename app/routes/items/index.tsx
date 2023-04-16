@@ -22,18 +22,18 @@ export default function Index() {
     <ul>
       {items.map(
         item => <li key={item.id}>
-          <ItemLink {...item} />
+          <ItemLink item={item} />
         </li>
       )}
       {newItem.submission && <li>
-        <ItemLink {...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} id={NaN} />
+        <ItemLink item={ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} />
       </li>}
       <li>
         <newItem.Form method="post" action={url('item', 'new')}>
           <input name="name" placeholder="name" required />
           <input name="description" placeholder="description" required />
-          <select name="locationId">
-            <option disabled selected>Location...</option>
+          <select name="locationId" defaultValue={undefined}>
+            <option disabled value={undefined}>Location...</option>
             {locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
           </select>
           <input type="hidden" name="submitInline" value="true" />
