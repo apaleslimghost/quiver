@@ -9,6 +9,8 @@ import {
 } from "@remix-run/react";
 
 import * as typography from './components/typography/typography.css'
+import * as container from './components/layout/container.css'
+
 import { cssBundleHref } from "@remix-run/css-bundle";
 
 export function links() {
@@ -31,7 +33,7 @@ export default function App() {
         <Links />
       </head>
       <body className={typography.main}>
-        <main>
+        <main className={container.main}>
           <Outlet />
         </main>
         <ScrollRestoration />
