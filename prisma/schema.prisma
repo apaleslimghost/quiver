@@ -14,7 +14,6 @@ model Item {
   id          Int             @id @default(autoincrement())
   name        String
   description String
-  locationId  Int
   locations   ItemLocations[]
 }
 
@@ -24,7 +23,7 @@ model ItemLocations {
   location   Location @relation(fields: [locationId], references: [id])
   locationId Int
 
-  quantity Int
+  quantity Int @default(0)
 
   @@id([itemId, locationId])
 }

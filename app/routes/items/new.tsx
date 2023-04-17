@@ -17,9 +17,9 @@ export const ItemFormSchema = z.object({
 	const item = await db.item.create({
 	  data: {
 		 ...data,
-		 location: {
-			connect: {
-			  id: locationId
+		 locations: {
+			create: {
+				locationId
 			}
 		 }
 	  }

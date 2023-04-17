@@ -1,4 +1,5 @@
-import { ActionArgs, json, redirect } from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import dbServer from "~/lib/db.server";
@@ -19,11 +20,15 @@ export async function action({request}: ActionArgs) {
 	const location = await dbServer.location.create({
 		data: {
 			...data,
-			parent: {
-				connect: {
-					id: parentId
-				}
-			}
+			...(parentId ?
+				{
+					parent: {
+						connect: {
+							id: parentId
+						}
+					}
+				} : {}
+			)
 		}
 	})
 
