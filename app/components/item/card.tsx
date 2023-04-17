@@ -1,11 +1,15 @@
 import { Item } from "@prisma/client";
 import { FC } from "react";
+import { Heading } from "../typography/heading";
 import { ItemLink } from "./link";
 
+import * as card from './card.css'
+
 export const ItemCard: FC<{item: Item}> = ({ item }) => <ItemLink item={item}>
-	<div>
-		<h3>
+	<div className={card.card}>
+		<Heading level={3} className={card.title}>
 			{item.name}
-		</h3>
+		</Heading>
+		<div className={card.content}>{item.description}</div>
 	</div>
 </ItemLink>

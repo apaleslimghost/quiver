@@ -9,13 +9,14 @@ import { ItemFormSchema } from "../items/new";
 import BwipJs from "bwip-js";
 import { ItemCard } from "~/components/item/card";
 
+import * as container from '../../components/layout/container.css'
+import grid from '../../components/layout/grid.css'
+import { Heading } from "~/components/typography/heading";
+import * as card from "~/components/item/card.css";
+
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
 })
-
-export const handle = {
-	layout: 'docs'
-}
 
 export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
@@ -40,14 +41,14 @@ export default function LocationPage() {
 	const {location, barcode, descendents} = useLoaderData<typeof loader>()
 	const newItem = useFetcher()
 
-	return <>
-		<h1>
+	return <div className={container.area.content}>
+		<Heading level={1}>
 			<img className='location__barcode' src={`data:image/png;base64,${barcode}`} alt="" />
 			{location.name}
-		</h1>
+		</Heading>
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
 
-		<div className="grid grid-flow-col auto-cols-max">
+		<div className={grid}>
 			{ location.items.map(item => <ItemCard key={item.id} item={item} />) }
 
 			{newItem.submission && <ItemCard item={{
@@ -55,7 +56,7 @@ export default function LocationPage() {
 				id: NaN
 			}} />}
 
-			<div>
+			<div className={card.card}>
 				<newItem.Form method='post' action={url('item', 'new')}>
 					<input name="name" type="text" required />
 					<input name="description" type="text" required />
@@ -70,5 +71,5 @@ export default function LocationPage() {
 				</newItem.Form>
 			</div>
 		</div>
-	</>
+	</div>
 }

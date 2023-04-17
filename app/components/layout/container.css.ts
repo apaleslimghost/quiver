@@ -6,7 +6,7 @@ export const main = style({
 	gridTemplateColumns: '[bleed-start right-gutter-start left-gutter-start content-start] 1fr [content-end left-gutter-end right-gutter-end bleed-end]',
 	'@media': {
 		'(min-width: 40rem)': {
-			gridTemplateColumns: '[bleed-start left-gutter-start] 1fr [left-gutter-end content-start] max(38rem, 60vw) [content-end right-gutter-start] 1fr [right-gutter-end bleed-end]'
+			gridTemplateColumns: '[bleed-start left-gutter-start] 1fr [left-gutter-end content-start] max(38rem, 75vw) [content-end right-gutter-start] 1fr [right-gutter-end bleed-end]'
 		}
 	}
 })

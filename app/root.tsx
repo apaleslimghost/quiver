@@ -10,6 +10,9 @@ import {
 
 import * as typography from './components/typography/typography.css'
 import * as container from './components/layout/container.css'
+import * as background from './components/brand/background.css'
+import * as colours from './components/brand/colours.css'
+import './components/global.css'
 
 import { cssBundleHref } from "@remix-run/css-bundle";
 
@@ -32,7 +35,11 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className={typography.main}>
+      <body className={[
+        typography.main,
+        background.main,
+        colours.themeClass
+      ].join(' ')}>
         <main className={container.main}>
           <Outlet />
         </main>
