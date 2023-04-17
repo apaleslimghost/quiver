@@ -6,11 +6,7 @@ import url from "~/lib/url";
 import { LocationFormSchema } from "./new";
 
 export async function loader() {
-  const locations = await db.location.findMany({
-	include: {
-		items: true
-	}
-  })
+  const locations = await db.location.findMany()
 
   return json({locations})
 }
@@ -23,7 +19,7 @@ export default function Index() {
     <ul>
       {locations.map(
         location => <li key={location.id}>
-          <LocationCard location={location} items={location.items} />
+          <LocationCard location={location} />
         </li>
       )}
       {newLocation.submission && <li>

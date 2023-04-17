@@ -33,4 +33,5 @@ export const title = style({
 })
 
 export const content = style({
+	margin: 0,
 })
