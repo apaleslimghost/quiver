@@ -23,7 +23,7 @@ model ItemLocations {
   location   Location @relation(fields: [locationId], references: [id])
   locationId Int
 
-  quantity Int @default(0)
+  quantity Int @default(1)
 
   @@id([itemId, locationId])
 }
