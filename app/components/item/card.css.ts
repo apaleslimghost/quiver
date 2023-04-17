@@ -5,11 +5,12 @@ export const card = style({
 	background: 'white',
 	position: 'relative',
 	padding: '1em',
-	borderRadius: 3,
-	border: '.5px solid #0002',
+	borderRadius: 4,
+	boxShadow: 'inset 0 0 0 .5px #0002',
+	transition: 'box-shadow 0.15s ease-in-out',
 	'::after': {
 		content: '',
-		borderRadius: 3,
+		borderRadius: 4,
 		position: 'absolute',
 		left: 6,
 		right: -6,
@@ -18,6 +19,12 @@ export const card = style({
 		zIndex: -1,
 		imageRendering: 'crisp-edges',
 		backgroundImage: 'repeating-linear-gradient(-45deg, #0006, #0006 1px, transparent 1px, transparent 3px)'
+	},
+
+	selectors: {
+		'a:hover &': {
+			boxShadow: `inset 0 0 0 2px ${colours.vars.ocean[4]}`,
+		}
 	}
 })
 

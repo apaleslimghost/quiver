@@ -4,8 +4,9 @@ import { Heading } from "../typography/heading";
 import { ItemLink } from "./link";
 
 import * as card from './card.css'
+import * as link from '../typography/link.css'
 
-export const ItemCard: FC<{item: Item}> = ({ item }) => <ItemLink item={item}>
+export const ItemCard: FC<{item: Item}> = ({ item }) => <ItemLink item={item} className={link.unstyled}>
 	<div className={card.card}>
 		<Heading level={3} className={card.title}>
 			{item.name}
