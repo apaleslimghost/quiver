@@ -11,19 +11,30 @@ datasource db {
 }
 
 model Item {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   name        String
   description String
   locationId  Int
-  location    Location @relation(fields: [locationId], references: [id])
+  locations   ItemLocations[]
+}
+
+model ItemLocations {
+  item       Item     @relation(fields: [itemId], references: [id])
+  itemId     Int
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId Int
+
+  quantity Int
+
+  @@id([itemId, locationId])
 }
 
 model Location {
-  id          Int        @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   name        String
   description String
-  items       Item[]
+  items       ItemLocations[]
   parentId    Int?
-  parent      Location?  @relation("LocationParent", references: [id], fields: [parentId])
-  children    Location[] @relation("LocationParent")
+  parent      Location?       @relation("LocationParent", references: [id], fields: [parentId])
+  children    Location[]      @relation("LocationParent")
 }

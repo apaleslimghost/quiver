@@ -22,7 +22,7 @@ export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
 
 	const [location, descendents, barcode] = await Promise.all([
-		db.location.findFirstOrThrow({ where, include: { items: true } }),
+		db.location.findFirstOrThrow({ where, include: { items: { include: {item: true}} } }),
 
 		queries.descendents(where.id),
 
@@ -49,7 +49,7 @@ export default function LocationPage() {
 		{descendents.length > 0 && <ul>{descendents.map(descendent => <li key={descendent.id}><Link to={url('location', descendent)}>{descendent.name}</Link></li>)}</ul>}
 
 		<div className={grid}>
-			{ location.items.map(item => <ItemCard key={item.id} item={item} />) }
+			{ location.items.map(item => <ItemCard key={item.itemId} item={item.item} />) }
 
 			{newItem.submission && <ItemCard item={{
 				...ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData)),
