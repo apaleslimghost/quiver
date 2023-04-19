@@ -1,24 +1,19 @@
 import { style } from "@vanilla-extract/css";
+import { shadow, shadowSize } from "../brand/background.css";
 import * as colours from '../brand/colours.css'
 
-export const card = style({
+export const card = style([shadow, {
 	background: 'white',
-	position: 'relative',
 	padding: '1em',
 	borderRadius: 4,
-	boxShadow: 'inset 0 0 0 .5px #0002',
+	boxShadow: `inset 0 0 0 .5px ${colours.vars.steel[6]}`,
 	transition: 'box-shadow 0.15s ease-in-out',
 	'::after': {
-		content: '',
 		borderRadius: 4,
-		position: 'absolute',
-		left: 6,
-		right: -6,
-		top: 6,
-		bottom: -6,
-		zIndex: -1,
-		imageRendering: 'crisp-edges',
-		backgroundImage: 'repeating-linear-gradient(-45deg, #0006, #0006 1px, transparent 1px, transparent 3px)'
+	},
+
+	vars: {
+		[shadowSize]: '6px'
 	},
 
 	selectors: {
@@ -26,7 +21,7 @@ export const card = style({
 			boxShadow: `inset 0 0 0 2px ${colours.vars.ocean[4]}`,
 		}
 	}
-})
+}])
 
 export const title = style({
 	margin: 0,

@@ -1,5 +1,6 @@
 import { createTheme } from "@vanilla-extract/css";
 import colours from '@quarterto/colours'
+import { lighten, mix } from "polished";
 
 const [themeClass, vars] = createTheme(
 	Object.fromEntries(

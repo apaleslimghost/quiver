@@ -13,6 +13,7 @@ import * as container from '../../components/layout/container.css'
 import grid from '../../components/layout/grid.css'
 import { Heading } from "~/components/typography/heading";
 import * as card from "~/components/item/card.css";
+import { Button, Form, Input } from "~/components/form/form";
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number()
@@ -57,18 +58,18 @@ export default function LocationPage() {
 			}} />}
 
 			<div className={card.card}>
-				<newItem.Form method='post' action={url('item', 'new')}>
-					<input name="name" type="text" required />
-					<input name="description" type="text" required />
+				<Form as={newItem.Form} method='post' action={url('item', 'new')}>
+					<Input name="name" type="text" required />
+					<Input name="description" type="text" required />
 					<input name="locationId" type="hidden" value={location.id} />
 					<input type="hidden" name="submitInline" value="true" />
-					<input type="submit" onClick={event => {
-					event.preventDefault()
-					if(event.target instanceof HTMLInputElement) {
-						newItem.submit(event.target.form)
-					}
-					}} />
-				</newItem.Form>
+					<Button onClick={event => {
+						event.preventDefault()
+						if(event.target instanceof HTMLButtonElement) {
+							newItem.submit(event.target.form)
+						}
+					}}>Add item</Button>
+				</Form>
 			</div>
 		</div>
 	</div>
