@@ -9,6 +9,7 @@ import * as container from '../../components/layout/container.css'
 import * as card from '../../components/item/card.css'
 import grid from '../../components/layout/grid.css'
 import { Heading } from "~/components/typography/heading";
+import { Button, Form, Input } from "~/components/form/form";
 
 export async function loader() {
   const locations = await db.location.findMany()
@@ -33,17 +34,17 @@ export default function Index() {
         <LocationCard location={LocationFormSchema.parse(Object.fromEntries(newLocation.submission.formData))} />
       }
       <div className={card.card}>
-        <newLocation.Form method="post" action={url('location', 'new')}>
-          <input name="name" placeholder="name" required />
-          <input name="description" placeholder="description" required />
+        <Form as={newLocation.Form} method="post" action={url('location', 'new')}>
+          <Input name="name" placeholder="name" required />
+          <Input name="description" placeholder="description" required />
           <input type="hidden" name="submitInline" value="true" />
-          <input type="submit" onClick={event => {
+          <Button onClick={event => {
             event.preventDefault()
             if(event.target instanceof HTMLInputElement) {
               newLocation.submit(event.target.form)
             }
-          }} />
-        </newLocation.Form>
+          }}>Create location</Button>
+        </Form>
       </div>
     </div>
   </div>;

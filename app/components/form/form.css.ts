@@ -13,7 +13,12 @@ const base = style({
 
 export const input = style([base, {
 	border: `1px solid ${colours.vars.steel[6]}`,
-	boxShadow: `3px 3px #fff5, 3px 3px ${colours.vars.steel[6]}`
+	boxShadow: `3px 3px #fff5, 3px 3px ${colours.vars.steel[6]}`,
+}])
+
+export const select = style([input, {
+	background: 'white',
+	appearance: 'auto'
 }])
 
 export const button = style([base, {

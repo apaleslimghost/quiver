@@ -6,6 +6,7 @@ import db from '~/lib/db.server'
 import url from "~/lib/url";
 import { ItemFormSchema } from "./new";
 import * as container from '../../components/layout/container.css'
+import { Button, Form, Input, Select } from "~/components/form/form";
 
 export async function loader() {
   const [items, locations] = await Promise.all([
@@ -33,10 +34,10 @@ export default function Index() {
           <ItemLink item={ItemFormSchema.parse(Object.fromEntries(newItem.submission.formData))} />
         </li>}
         <li>
-          <newItem.Form method="post" action={url('item', 'new')}>
-            <input name="name" placeholder="name" required />
-            <input name="description" placeholder="description" required />
-            <select name="locationId">
+          <Form as={newItem.Form} method="post" action={url('item', 'new')}>
+            <Input name="name" placeholder="name" required />
+            <Input name="description" placeholder="description" required />
+            <Select name="locationId">
               <option disabled selected>Location...</option>
               <>
                 {locations.map(
@@ -45,15 +46,15 @@ export default function Index() {
                   </option>
                 )}
               </>
-            </select>
+            </Select>
             <input type="hidden" name="submitInline" value="true" />
-            <input type="submit" onClick={event => {
+            <Button onClick={event => {
               event.preventDefault()
-              if(event.target instanceof HTMLInputElement) {
+              if(event.target instanceof HTMLButtonElement) {
                 newItem.submit(event.target.form)
               }
-            }} />
-          </newItem.Form>
+            }}>Create item</Button>
+          </Form>
         </li>
       </ul>
     </div>

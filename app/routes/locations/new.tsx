@@ -1,7 +1,8 @@
 import type { ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form as RemixForm, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
+import { Button, Form, Input, Select } from "~/components/form/form";
 import dbServer from "~/lib/db.server";
 import url from "~/lib/url";
 
@@ -47,14 +48,14 @@ export async function loader() {
 export default function New() {
 	const locations = useLoaderData<typeof loader>()
 
-	return <Form method="post">
-		<input name="name" placeholder="name" required />
-		<input name="description" placeholder="description" required />
-		<select name="parentId">
+	return <Form as={RemixForm} method="post">
+		<Input name="name" placeholder="name" required />
+		<Input name="description" placeholder="description" required />
+		<Select name="parentId">
 			<option></option>
 			{locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
-		</select>
+		</Select>
 
-		<input type="submit" />
+		<Button>Create location</Button>
 	</Form>
 }
