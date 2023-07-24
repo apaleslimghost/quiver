@@ -33,7 +33,7 @@ export default function Item() {
 		<Heading level={1}>{item.name}</Heading>
 		{item.category &&
 		<div className=''>
-			{item.category.name}
+			<Link to={url('category', item.category)}>{item.category.name}</Link>
 		</div>}
 
 		<div className={card.card}>
