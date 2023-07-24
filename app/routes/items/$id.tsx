@@ -15,9 +15,10 @@ const ItemParamsSchema = z.object({
 export async function loader({ params }: LoaderArgs) {
 	const where = ItemParamsSchema.parse(params)
 	const item = await db.item.findFirstOrThrow({ where, include: {
+		category: true,
 		locations: {
 			include: {
-				location: true
+				location: true,
 			}
 		}
 	}})
@@ -30,9 +31,14 @@ export default function Item() {
 
 	return <div className={container.area.content}>
 		<Heading level={1}>{item.name}</Heading>
+		{item.category &&
+		<div className=''>
+			{item.category.name}
+		</div>}
 
 		<div className={card.card}>
 			<Heading level={3} className={card.title}>Locations</Heading>
+
 			<ul className={card.content}>
 				{item.locations.map(location => (
 					<li key={location.locationId}>
