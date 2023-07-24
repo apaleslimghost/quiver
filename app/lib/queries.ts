@@ -1,5 +1,5 @@
 import db from './db.server'
-import {Location} from '@prisma/client'
+import { Location } from '@prisma/client'
 
 export const ancestors = (parentId: number) => db.$queryRaw<Location[]>`
 WITH RECURSIVE ancestors AS (

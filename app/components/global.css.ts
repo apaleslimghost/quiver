@@ -1,5 +1,5 @@
-import { globalStyle } from "@vanilla-extract/css";
+import { globalStyle } from '@vanilla-extract/css'
 
 globalStyle('*', {
-	boxSizing: 'border-box'
+	boxSizing: 'border-box',
 })

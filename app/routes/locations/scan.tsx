@@ -1,7 +1,7 @@
-import { useZxing, DecodeHintType } from "react-zxing";
-import {BarcodeFormat} from '@zxing/library'
-import { useNavigate } from "@remix-run/react";
-import url from "~/lib/url";
+import { useZxing, DecodeHintType } from 'react-zxing'
+import { BarcodeFormat } from '@zxing/library'
+import { useNavigate } from '@remix-run/react'
+import url from '~/lib/url'
 
 export default function Scan() {
 	const navigate = useNavigate()
@@ -11,13 +11,15 @@ export default function Scan() {
 			const text = result.getText()
 			const id = parseInt(text)
 
-			if(!Number.isNaN(id)) {
+			if (!Number.isNaN(id)) {
 				navigate(url('location', { id }))
 			}
-		}
+		},
 	})
 
-	return <>
-		<video ref={ref} />
-	</>
+	return (
+		<>
+			<video ref={ref} />
+		</>
+	)
 }
