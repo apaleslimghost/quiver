@@ -41,7 +41,10 @@ model Location {
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  items Item[]
+  id       Int        @id @default(autoincrement())
+  name     String
+  items    Item[]
+  parentId Int?
+  parent   Category?  @relation("CategoryParent", references: [id], fields: [parentId])
+  children Category[] @relation("CategoryParent")
 }
