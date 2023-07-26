@@ -8,6 +8,8 @@ import * as container from '~/components/layout/container.css'
 import * as card from '~/components/item/card.css'
 import url from '~/lib/url'
 import { Breadcrumbs } from '~/components/breadcrumbs'
+import { LocationCard } from '~/components/location/card'
+import grid from '~/components/layout/grid.css'
 
 const ItemParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -64,20 +66,12 @@ export default function Item() {
 				</div>
 			)}
 
-			<div className={card.card}>
-				<Heading level={3} className={card.title}>
-					Locations
-				</Heading>
-
-				<ul className={card.content}>
-					{locations.map((location) => (
-						<li key={location.id}>
-							<strong>{location.quantity}</strong> in{' '}
-							<Breadcrumbs type='Location' ancestors={location.ancestors} />
-							<Link to={url('location', location)}>{location.name}</Link>
-						</li>
-					))}
-				</ul>
+			<div className={grid}>
+				{locations.map((location) => (
+					<LocationCard location={location} key={location.id}>
+						{location.quantity}
+					</LocationCard>
+				))}
 			</div>
 		</div>
 	)

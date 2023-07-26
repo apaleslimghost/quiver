@@ -1,6 +1,7 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 
 export const breadcrumbs = style({
+	display: 'inline-block',
 	listStyle: 'none',
 	margin: 0,
 	padding: 0,
