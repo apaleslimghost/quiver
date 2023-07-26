@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 
 export const breadcrumbs = style({
 	listStyle: 'none',
@@ -6,10 +6,24 @@ export const breadcrumbs = style({
 	padding: 0,
 })
 
-export const breadcrumb = style({
-	display: 'inline-block',
-	'::after': {
-		content: '›',
-		marginInline: '0.5ch',
-	},
+const baseBreadcrumb = style({ display: 'inline-block' })
+
+export const breadcrumb = styleVariants({
+	default: [
+		baseBreadcrumb,
+		{
+			'::after': {
+				content: '›',
+				marginInline: '0.5ch',
+			},
+		},
+	],
+	noLastArrow: [baseBreadcrumb, {
+		selectors: {
+			'&:not(:last-child)::after': {
+				content: '›',
+				marginInline: '0.5ch',
+			}
+		}
+	}],
 })

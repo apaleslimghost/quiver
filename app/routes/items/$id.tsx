@@ -37,18 +37,30 @@ export async function loader({ params }: LoaderArgs) {
 		})),
 	)
 
-	return json({ item, locations })
+	const categoryAncestors = item.category?.parentId
+		? await queries.ancestors('Category', item.category.parentId)
+		: []
+
+	return json({ item, locations, categoryAncestors })
 }
 
 export default function Item() {
-	const { item, locations } = useLoaderData<typeof loader>()
+	const { item, locations, categoryAncestors } = useLoaderData<typeof loader>()
 
 	return (
 		<div className={container.area.content}>
 			<Heading level={1}>{item.name}</Heading>
 			{item.category && (
 				<div className=''>
-					<Link to={url('category', item.category)}>{item.category.name}</Link>
+					<Breadcrumbs
+						type='Category'
+						ancestors={categoryAncestors}
+						noLastArrow
+					>
+						<Link to={url('category', item.category)}>
+							{item.category.name}
+						</Link>
+					</Breadcrumbs>
 				</div>
 			)}
 
