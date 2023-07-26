@@ -1,10 +1,4 @@
-import {
-	FC,
-	HTMLProps,
-	Component,
-	ComponentProps,
-	JSXElementConstructor,
-} from 'react'
+import type { FC, ComponentProps, JSXElementConstructor } from 'react'
 import * as form from './form.css'
 
 export const Input: FC<ComponentProps<'input'>> = (props) => (

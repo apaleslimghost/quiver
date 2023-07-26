@@ -15,6 +15,8 @@ import { Heading } from '~/components/typography/heading'
 import * as card from '~/components/item/card.css'
 import { Button, Form, Input } from '~/components/form/form'
 import { Breadcrumbs } from '~/components/breadcrumbs'
+import { AztecCode } from '~/components/aztec-code'
+import { LocationTitle } from '~/components/location/title'
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -23,43 +25,30 @@ const LocationParamsSchema = z.object({
 export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
 
-	const [location, descendents, barcode] = await Promise.all([
+	const [location, descendents] = await Promise.all([
 		db.location.findFirstOrThrow({
 			where,
 			include: { items: { include: { item: true } } },
 		}),
 
 		queries.descendents('Location', where.id),
-
-		BwipJs.toBuffer({
-			bcid: 'azteccodecompact',
-			text: where.id.toString(),
-		}).then((buffer) => buffer.toString('base64')),
 	])
 
 	const ancestors = location.parentId
 		? (await queries.ancestors('Location', location.parentId)).reverse()
 		: []
 
-	return json({ location, barcode, descendents, ancestors })
+	return json({ location, descendents, ancestors })
 }
 
 export default function LocationPage() {
-	const { location, barcode, descendents, ancestors } =
-		useLoaderData<typeof loader>()
+	const { location, descendents, ancestors } = useLoaderData<typeof loader>()
 	const newItem = useFetcher()
 
 	return (
 		<div className={container.area.content}>
 			<Breadcrumbs type='Location' ancestors={ancestors} />
-			<Heading level={1}>
-				<img
-					className='location__barcode'
-					src={`data:image/png;base64,${barcode}`}
-					alt=''
-				/>
-				{location.name}
-			</Heading>
+			<LocationTitle location={location} />
 			{descendents.length > 0 && (
 				<ul>
 					{descendents.map((descendent) => (
@@ -102,6 +91,15 @@ export default function LocationPage() {
 						>
 							Add item
 						</Button>
+					</Form>
+				</div>
+
+				<div className={card.card}>
+					<Form method='post' action={url('location', 'new')}>
+						<Input name='name' type='text' required />
+						<Input name='description' type='text' required />
+						<input name='parentId' type='hidden' value={location.id} />
+						<Button>Add sublocation</Button>
 					</Form>
 				</div>
 			</div>
