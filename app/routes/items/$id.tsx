@@ -7,6 +7,7 @@ import { Heading } from '~/components/typography/heading'
 import * as container from '~/components/layout/container.css'
 import * as card from '~/components/item/card.css'
 import url from '~/lib/url'
+import { Breadcrumbs } from '~/components/breadcrumbs'
 
 const ItemParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -25,12 +26,22 @@ export async function loader({ params }: LoaderArgs) {
 			},
 		},
 	})
-	// const ancestors = (await queries.ancestors(item.location.locationId)).reverse()
-	return json({ item })
+
+	const locations = await Promise.all(
+		item.locations.map(async (location) => ({
+			...location,
+			...location.location,
+			ancestors: location.location.parentId
+				? await queries.ancestors('Location', location.location.parentId)
+				: [],
+		})),
+	)
+
+	return json({ item, locations })
 }
 
 export default function Item() {
-	const { item } = useLoaderData<typeof loader>()
+	const { item, locations } = useLoaderData<typeof loader>()
 
 	return (
 		<div className={container.area.content}>
@@ -47,12 +58,11 @@ export default function Item() {
 				</Heading>
 
 				<ul className={card.content}>
-					{item.locations.map((location) => (
-						<li key={location.locationId}>
+					{locations.map((location) => (
+						<li key={location.id}>
 							<strong>{location.quantity}</strong> in{' '}
-							<Link to={url('location', location.location)}>
-								{location.location.name}
-							</Link>
+							<Breadcrumbs type='Location' ancestors={location.ancestors} />
+							<Link to={url('location', location)}>{location.name}</Link>
 						</li>
 					))}
 				</ul>

@@ -1,15 +1,10 @@
-import {
-	json,
-	LoaderArgs,
-	LoaderFunction,
-	TypedResponse,
-} from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { Link, useFetcher, useLoaderData } from '@remix-run/react'
 import db from '~/lib/db.server'
 import url from '~/lib/url'
 import { z } from 'zod'
 import * as queries from '~/lib/queries'
-import { ItemLink } from '~/components/item/link'
 import { ItemFormSchema } from '../items/new'
 import BwipJs from 'bwip-js'
 import { ItemCard } from '~/components/item/card'
@@ -19,6 +14,7 @@ import grid from '../../components/layout/grid.css'
 import { Heading } from '~/components/typography/heading'
 import * as card from '~/components/item/card.css'
 import { Button, Form, Input } from '~/components/form/form'
+import { Breadcrumbs } from '~/components/breadcrumbs'
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -33,7 +29,7 @@ export async function loader({ params }: LoaderArgs) {
 			include: { items: { include: { item: true } } },
 		}),
 
-		queries.descendents(where.id),
+		queries.descendents('Location', where.id),
 
 		BwipJs.toBuffer({
 			bcid: 'azteccodecompact',
@@ -42,18 +38,20 @@ export async function loader({ params }: LoaderArgs) {
 	])
 
 	const ancestors = location.parentId
-		? (await queries.ancestors(location.parentId)).reverse()
+		? (await queries.ancestors('Location', location.parentId)).reverse()
 		: []
 
 	return json({ location, barcode, descendents, ancestors })
 }
 
 export default function LocationPage() {
-	const { location, barcode, descendents } = useLoaderData<typeof loader>()
+	const { location, barcode, descendents, ancestors } =
+		useLoaderData<typeof loader>()
 	const newItem = useFetcher()
 
 	return (
 		<div className={container.area.content}>
+			<Breadcrumbs type='Location' ancestors={ancestors} />
 			<Heading level={1}>
 				<img
 					className='location__barcode'

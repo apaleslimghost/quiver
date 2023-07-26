@@ -1,28 +1,41 @@
 import db from './db.server'
-import { Location } from '@prisma/client'
+import type { Category, Location } from '@prisma/client'
 
-export const ancestors = (parentId: number) => db.$queryRaw<Location[]>`
+export type ParentModels = {
+	Location: Location
+	Category: Category
+}
+
+export const ancestors = (model: keyof ParentModels, parentId: number) =>
+	db.$queryRawUnsafe<ParentModels[typeof model][]>(
+		`
 WITH RECURSIVE ancestors AS (
 	SELECT id, name, "parentId"
-	FROM "Location"
-	WHERE id = ${parentId}
+	FROM "${model}"
+	WHERE id = $1
 	UNION ALL
 	SELECT l.id, l.name, l."parentId"
-	FROM "Location" l
+	FROM "${model}" l
 	JOIN ancestors a ON a."parentId" = l.id
 )
 SELECT * FROM ancestors;
-`
+`,
+		parentId,
+	)
 
-export const descendents = (id: number) => db.$queryRaw<Location[]>`
+export const descendents = (model: keyof ParentModels, id: number) =>
+	db.$queryRawUnsafe<ParentModels[typeof model][]>(
+		`
 WITH RECURSIVE descendents AS (
 	SELECT id, name, "parentId"
-	FROM "Location"
-	WHERE "parentId" = ${id}
+	FROM "${model}"
+	WHERE "parentId" = $1
 	UNION ALL
 	SELECT l.id, l.name, l."parentId"
-	FROM "Location" l
+	FROM "${model}" l
 	JOIN descendents cs ON cs.id = l."parentId"
 )
 SELECT * FROM descendents;
-`
+`,
+		id,
+	)

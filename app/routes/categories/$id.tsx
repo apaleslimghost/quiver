@@ -6,6 +6,7 @@ import db from '~/lib/db.server'
 import * as container from '~/components/layout/container.css'
 import * as card from '~/components/item/card.css'
 import url from '~/lib/url'
+import * as queries from '~/lib/queries'
 
 const CategoryParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -20,11 +21,15 @@ export async function loader({ params }: LoaderArgs) {
 		},
 	})
 
-	return json({ category })
+	const ancestors = category.parentId
+		? await queries.ancestors('Category', category.parentId)
+		: []
+
+	return json({ category, ancestors })
 }
 
 export default function CategoryPage() {
-	const { category } = useLoaderData<typeof loader>()
+	const { category, ancestors } = useLoaderData<typeof loader>()
 
 	return (
 		<div className={container.area.content}>
