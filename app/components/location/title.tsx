@@ -1,13 +1,20 @@
 import type { Location } from '@prisma/client'
 import type { FC, HTMLProps } from 'react'
-import { Heading } from '../typography/heading'
+import { Heading, type HeadingLevel } from '../typography/heading'
 import { AztecCode } from '../aztec-code'
 import { title, aztec } from './title.css'
 
 export const LocationTitle: FC<
-	{ location: Partial<Location> } & Omit<HTMLProps<HTMLHeadingElement>, 'id'>
-> = ({ location, ...props }) => (
-	<Heading level={1} className={title} {...props}>
+	{ location: Partial<Location>; level?: HeadingLevel } & Omit<
+		HTMLProps<HTMLHeadingElement>,
+		'id'
+	>
+> = ({ location, level, className, ...props }) => (
+	<Heading
+		level={level ?? 1}
+		className={`${title} ${className ?? ''}`}
+		{...props}
+	>
 		{location.id && (
 			<AztecCode className={aztec} data={location.id.toString()} />
 		)}

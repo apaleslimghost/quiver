@@ -17,6 +17,7 @@ import { Button, Form, Input } from '~/components/form/form'
 import { Breadcrumbs } from '~/components/breadcrumbs'
 import { AztecCode } from '~/components/aztec-code'
 import { LocationTitle } from '~/components/location/title'
+import { LocationCard } from '~/components/location/card'
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -49,20 +50,16 @@ export default function LocationPage() {
 		<div className={container.area.content}>
 			<Breadcrumbs type='Location' ancestors={ancestors} />
 			<LocationTitle location={location} />
-			{descendents.length > 0 && (
-				<ul>
-					{descendents.map((descendent) => (
-						<li key={descendent.id}>
-							<Link to={url('location', descendent)}>{descendent.name}</Link>
-						</li>
-					))}
-				</ul>
-			)}
 
 			<div className={grid}>
 				{location.items.map((item) => (
 					<ItemCard key={item.itemId} item={item.item} />
 				))}
+
+				{descendents.length > 0 &&
+					descendents.map((descendent) => (
+						<LocationCard key={descendent.id} location={descendent} />
+					))}
 
 				{newItem.submission && (
 					<ItemCard

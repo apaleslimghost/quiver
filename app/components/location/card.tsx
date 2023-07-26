@@ -7,6 +7,7 @@ import url from '~/lib/url'
 import * as card from '../item/card.css'
 import * as link from '../typography/link.css'
 import { Heading } from '../typography/heading'
+import { LocationTitle } from './title'
 
 export const LocationCard: FC<{ location: Partial<Location> }> = ({
 	location,
@@ -16,9 +17,7 @@ export const LocationCard: FC<{ location: Partial<Location> }> = ({
 	return (
 		<Wrapper to={url('location', location)} className={link.unstyled}>
 			<div className={card.card}>
-				<Heading level={3} className={card.title}>
-					{location.name}
-				</Heading>
+				<LocationTitle level={3} className={card.title} location={location} />
 			</div>
 		</Wrapper>
 	)

@@ -2,13 +2,11 @@ import { FC, HTMLProps } from 'react'
 
 import * as heading from './heading.css'
 
-type Level = 1 | 2 | 3 | 4 | 5 | 6
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
 
-export const Heading: FC<{ level: Level } & HTMLProps<HTMLHeadingElement>> = ({
-	level,
-	className,
-	...props
-}) => {
+export const Heading: FC<
+	{ level: HeadingLevel } & HTMLProps<HTMLHeadingElement>
+> = ({ level, className, ...props }) => {
 	const Tag = `h${level}` as const
 
 	return (
