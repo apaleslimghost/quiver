@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const title = style({
+	marginTop: 0,
 	letterSpacing: '-0.05em'
 })
 
