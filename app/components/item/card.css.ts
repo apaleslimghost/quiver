@@ -20,7 +20,7 @@ export const card = style([
 
 		selectors: {
 			'a:hover &': {
-				boxShadow: `inset 0 0 0 2px ${colours.vars.ocean[4]}`,
+				boxShadow: `inset 0 0 0 2px ${colours.vars.aqua[3]}`,
 			},
 		},
 	},
