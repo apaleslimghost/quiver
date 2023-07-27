@@ -17,6 +17,7 @@ model Item {
   locations   ItemLocations[]
   category    Category?       @relation(fields: [categoryId], references: [id])
   categoryId  Int?
+  tags        ItemTag[]
 }
 
 model ItemLocations {
@@ -47,4 +48,19 @@ model Category {
   parentId Int?
   parent   Category?  @relation("CategoryParent", references: [id], fields: [parentId])
   children Category[] @relation("CategoryParent")
+}
+
+model Tag {
+  id    Int       @id @default(autoincrement())
+  name  String
+  items ItemTag[]
+}
+
+model ItemTag {
+  itemId Int
+  item   Item @relation(fields: [itemId], references: [id])
+  tagId  Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
+
+  @@id([itemId, tagId])
 }
