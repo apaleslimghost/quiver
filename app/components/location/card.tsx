@@ -1,7 +1,6 @@
-import { Item, Location } from '@prisma/client'
 import { Link } from '@remix-run/react'
-import pluralize from 'pluralize'
-import { FC, PropsWithChildren } from 'react'
+import type { Location } from '@prisma/client'
+import type { FC, PropsWithChildren } from 'react'
 import url from '~/lib/url'
 
 import * as card from '../item/card.css'
