@@ -34,13 +34,15 @@ export async function loader({ params }: LoaderArgs) {
 			...location,
 			...location.location,
 			ancestors: location.location.parentId
-				? await queries.ancestors('Location', location.location.parentId)
+				? (
+						await queries.ancestors('Location', location.location.parentId)
+				  ).reverse()
 				: [],
 		})),
 	)
 
 	const categoryAncestors = item.category?.parentId
-		? await queries.ancestors('Category', item.category.parentId)
+		? (await queries.ancestors('Category', item.category.parentId)).reverse()
 		: []
 
 	return json({ item, locations, categoryAncestors })
