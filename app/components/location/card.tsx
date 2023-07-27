@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react'
-import type { Location } from '@prisma/client'
+import type { ItemLocations, Location } from '@prisma/client'
 import type { FC, PropsWithChildren } from 'react'
 import url from '~/lib/url'
 
@@ -10,20 +10,23 @@ import { Breadcrumbs } from '../breadcrumbs'
 
 export const LocationCard: FC<
 	PropsWithChildren<{
-		location: Partial<Location> & { ancestors?: Partial<Location>[] }
+		location: Partial<Location> &
+			Partial<ItemLocations> & { ancestors?: Partial<Location>[] }
 	}>
 > = ({ location, children }) => {
 	const Wrapper = Number.isNaN(location.id) ? 'div' : Link
 
 	return (
 		<Wrapper to={url('location', location)} className={link.unstyled}>
-			<div className={card.card}>
+			<div className={card.card} data-wtf='hello?'>
 				{location.ancestors && (
 					<Breadcrumbs type='Location' ancestors={location.ancestors} />
 				)}
 				<LocationTitle level={3} className={card.title} location={location} />
 
-				{children && <div className={card.content}>{children}</div>}
+				{!Number.isNaN(location.quantity) && (
+					<div className={card.number}>{location.quantity}</div>
+				)}
 			</div>
 		</Wrapper>
 	)

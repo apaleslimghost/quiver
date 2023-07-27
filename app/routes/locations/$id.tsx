@@ -57,7 +57,7 @@ export default function LocationPage() {
 					{location.description}
 				</div>
 				{location.items.map((item) => (
-					<ItemCard key={item.itemId} item={item.item} />
+					<ItemCard key={item.itemId} item={item.item} itemLocation={item} />
 				))}
 
 				{children.length > 0 &&

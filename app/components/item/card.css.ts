@@ -10,6 +10,9 @@ export const card = style([
 		borderRadius: 4,
 		boxShadow: `inset 0 0 0 .5px ${colours.vars.steel[6]}`,
 		transition: 'box-shadow 0.15s ease-in-out',
+		display: 'flex',
+		flexDirection: 'column',
+
 		'::after': {
 			borderRadius: 4,
 		},
@@ -27,7 +30,7 @@ export const card = style([
 ])
 
 export const wide = style({
-	gridColumn: 'span 2'
+	gridColumn: 'span 2',
 })
 
 export const title = style({
@@ -36,4 +39,12 @@ export const title = style({
 
 export const content = style({
 	margin: 0,
+})
+
+export const number = style({
+	fontSize: '4em',
+	fontWeight: 300,
+	alignSelf: 'flex-end',
+	position: 'absolute',
+	lineHeight: 1,
 })

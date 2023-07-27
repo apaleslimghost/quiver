@@ -64,10 +64,9 @@ export default function Item() {
 
 			<div className={grid}>
 				<div className={`${card.card} ${card.wide}`}>{item.description}</div>
+
 				{locations.map((location) => (
-					<LocationCard location={location} key={location.id}>
-						{location.quantity}
-					</LocationCard>
+					<LocationCard location={location} key={location.id} />
 				))}
 			</div>
 		</div>
