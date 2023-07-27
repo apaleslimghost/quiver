@@ -51,20 +51,16 @@ export default function Item() {
 
 	return (
 		<div className={container.area.content}>
-			<Heading level={1}>{item.name}</Heading>
 			{item.category && (
 				<div className=''>
-					<Breadcrumbs
-						type='Category'
-						ancestors={categoryAncestors}
-						noLastArrow
-					>
+					<Breadcrumbs type='Category' ancestors={categoryAncestors}>
 						<Link to={url('category', item.category)}>
 							{item.category.name}
 						</Link>
 					</Breadcrumbs>
 				</div>
 			)}
+			<Heading level={1}>{item.name}</Heading>
 
 			<div className={grid}>
 				<div className={`${card.card} ${card.wide}`}>{item.description}</div>
