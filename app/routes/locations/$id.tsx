@@ -26,24 +26,28 @@ const LocationParamsSchema = z.object({
 export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
 
-	const [location, descendents] = await Promise.all([
+	const [location, children] = await Promise.all([
 		db.location.findFirstOrThrow({
 			where,
 			include: { items: { include: { item: true } } },
 		}),
 
-		queries.descendents('Location', where.id),
+		db.location.findMany({
+			where: {
+				parentId: where.id,
+			},
+		}),
 	])
 
 	const ancestors = location.parentId
 		? (await queries.ancestors('Location', location.parentId)).reverse()
 		: []
 
-	return json({ location, descendents, ancestors })
+	return json({ location, children, ancestors })
 }
 
 export default function LocationPage() {
-	const { location, descendents, ancestors } = useLoaderData<typeof loader>()
+	const { location, children, ancestors } = useLoaderData<typeof loader>()
 	const newItem = useFetcher()
 
 	return (
@@ -56,9 +60,9 @@ export default function LocationPage() {
 					<ItemCard key={item.itemId} item={item.item} />
 				))}
 
-				{descendents.length > 0 &&
-					descendents.map((descendent) => (
-						<LocationCard key={descendent.id} location={descendent} />
+				{children.length > 0 &&
+					children.map((child) => (
+						<LocationCard key={child.id} location={child} />
 					))}
 
 				{newItem.submission && (
