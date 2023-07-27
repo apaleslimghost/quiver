@@ -26,6 +26,10 @@ export const card = style([
 	},
 ])
 
+export const wide = style({
+	gridColumn: 'span 2'
+})
+
 export const title = style({
 	margin: 0,
 })

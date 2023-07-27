@@ -9,6 +9,7 @@ import url from '~/lib/url'
 import { Breadcrumbs } from '~/components/breadcrumbs'
 import { LocationCard } from '~/components/location/card'
 import grid from '~/components/layout/grid.css'
+import * as card from '~/components/item/card.css'
 
 const ItemParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -66,6 +67,7 @@ export default function Item() {
 			)}
 
 			<div className={grid}>
+				<div className={`${card.card} ${card.wide}`}>{item.description}</div>
 				{locations.map((location) => (
 					<LocationCard location={location} key={location.id}>
 						{location.quantity}

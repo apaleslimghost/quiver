@@ -53,6 +53,9 @@ export default function LocationPage() {
 			<LocationTitle location={location} />
 
 			<div className={grid}>
+				<div className={`${card.card} ${card.wide}`}>
+					{location.description}
+				</div>
 				{location.items.map((item) => (
 					<ItemCard key={item.itemId} item={item.item} />
 				))}
