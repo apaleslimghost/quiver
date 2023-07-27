@@ -7,6 +7,9 @@ import * as container from '~/components/layout/container.css'
 import * as card from '~/components/item/card.css'
 import url from '~/lib/url'
 import * as queries from '~/lib/queries'
+import { Breadcrumbs } from '~/components/breadcrumbs'
+import grid from '~/components/layout/grid.css'
+import { ItemCard } from '~/components/item/card'
 
 const CategoryParamsSchema = z.object({
 	id: z.coerce.number(),
@@ -33,20 +36,13 @@ export default function CategoryPage() {
 
 	return (
 		<div className={container.area.content}>
+			<Breadcrumbs type='Category' ancestors={ancestors} />
 			<Heading level={1}>{category.name}</Heading>
 
-			<div className={card.card}>
-				<Heading level={3} className={card.title}>
-					Items
-				</Heading>
-
-				<ul className={card.content}>
-					{category.items.map((item) => (
-						<li key={item.id}>
-							<Link to={url('item', item)}>{item.name}</Link>
-						</li>
-					))}
-				</ul>
+			<div className={grid}>
+				{category.items.map((item) => (
+					<ItemCard key={item.id} item={item} />
+				))}
 			</div>
 		</div>
 	)
