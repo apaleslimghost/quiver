@@ -19,6 +19,13 @@ export const input = style([
 	},
 ])
 
+export const searchInput = style([
+	input,
+	{
+		borderRadius: '2em'
+	}
+])
+
 export const select = style([
 	input,
 	{

@@ -1,8 +1,11 @@
 import type { FC, ComponentProps, JSXElementConstructor } from 'react'
 import * as form from './form.css'
 
-export const Input: FC<ComponentProps<'input'>> = (props) => (
-	<input {...props} className={form.input} />
+export const Input: FC<ComponentProps<'input'>> = ({ className, ...props }) => (
+	<input {...props} className={`${form.input} ${className ?? ''}`} />
+)
+export const SearchInput: FC<ComponentProps<'input'>> = (props) => (
+	<Input type='search' className={form.searchInput} {...props} />
 )
 export const Select: FC<ComponentProps<'select'>> = (props) => (
 	<select {...props} className={form.select} />

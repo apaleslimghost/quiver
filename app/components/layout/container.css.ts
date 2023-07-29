@@ -14,8 +14,8 @@ export const main = style({
 })
 
 export const area = styleVariants({
-	content: { gridArea: 'content' },
-	left: { gridArea: 'left-gutter' },
-	right: { gridArea: 'right-gutter' },
-	bleed: { gridArea: 'bleed' },
+	content: { gridColumn: 'content' },
+	left: { gridColumn: 'left-gutter' },
+	right: { gridColumn: 'right-gutter' },
+	bleed: { gridColumn: 'bleed' },
 })

@@ -1,5 +1,6 @@
-import type { MetaFunction } from '@remix-run/node'
+import { type MetaFunction } from '@remix-run/node'
 import {
+	Form,
 	Links,
 	LiveReload,
 	Meta,
@@ -7,14 +8,14 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from '@remix-run/react'
+import { cssBundleHref } from '@remix-run/css-bundle'
 
 import * as typography from './components/typography/typography.css'
 import * as container from './components/layout/container.css'
 import * as background from './components/brand/background.css'
 import * as colours from './components/brand/colours.css'
+import { SearchInput } from './components/form/form'
 import './components/global.css'
-
-import { cssBundleHref } from '@remix-run/css-bundle'
 
 export function links() {
 	return [{ rel: 'stylesheet', href: cssBundleHref }]
@@ -39,6 +40,12 @@ export default function App() {
 				)}
 			>
 				<main className={container.main}>
+					<header className={container.area.content}>
+						<Form method='get' action='/search'>
+							<SearchInput name='q' />
+							<button type='submit'>search</button>
+						</Form>
+					</header>
 					<Outlet />
 				</main>
 				<ScrollRestoration />
