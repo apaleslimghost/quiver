@@ -1,15 +1,15 @@
-import type { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs, V2_MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import db from '~/lib/db.server'
 import url from '~/lib/url'
 import { z } from 'zod'
 import * as queries from '~/lib/queries'
-import { ItemFormSchema } from '../items/new'
+import { ItemFormSchema } from './items.new'
 import { ItemCard } from '~/components/item/card'
 
-import * as container from '../../components/layout/container.css'
-import grid from '../../components/layout/grid.css'
+import * as container from '~/components/layout/container.css'
+import grid from '~/components/layout/grid.css'
 import * as card from '~/components/item/card.css'
 import { Button, Form, Input } from '~/components/form/form'
 import { Breadcrumbs } from '~/components/breadcrumbs'
@@ -19,6 +19,10 @@ import { LocationCard } from '~/components/location/card'
 const LocationParamsSchema = z.object({
 	id: z.coerce.number(),
 })
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => [
+	{ title: `Quiver ➳ ${data?.location.name}` },
+]
 
 export async function loader({ params }: LoaderArgs) {
 	const where = LocationParamsSchema.parse(params)
@@ -65,12 +69,10 @@ export default function LocationPage() {
 						<LocationCard key={child.id} location={child} />
 					))}
 
-				{newItem.submission && (
+				{newItem.formData && (
 					<ItemCard
 						item={{
-							...ItemFormSchema.parse(
-								Object.fromEntries(newItem.submission.formData),
-							),
+							...ItemFormSchema.parse(Object.fromEntries(newItem.formData)),
 							id: NaN,
 						}}
 					/>

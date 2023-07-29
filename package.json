@@ -1,4 +1,5 @@
 {
+  "name": "quiver",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -10,19 +11,18 @@
     "repl": "ts-node --skip-project -r ./app/lib/db.server.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.9.0",
+    "@prisma/client": "^5.0.0",
     "@quarterto/colours": "^1.5.0",
-    "@remix-run/css-bundle": "^1.15.0",
-    "@remix-run/node": "^1.14.0",
-    "@remix-run/react": "^1.14.0",
-    "@remix-run/serve": "^1.14.0",
+    "@remix-run/css-bundle": "^1.19.0",
+    "@remix-run/node": "^1.19.0",
+    "@remix-run/react": "^1.19.0",
+    "@remix-run/serve": "^1.19.0",
     "@vanilla-extract/css": "^1.11.0",
     "@zxing/library": "^0.19.2",
     "bwip-js": "^3.2.2",
     "isbot": "^3.6.5",
     "pluralize": "^8.0.0",
     "polished": "^4.2.2",
-    "prisma": "^4.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-zxing": "1.0",
@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@quarterto/prettier": "^1.1.0",
-    "@remix-run/dev": "^1.14.0",
-    "@remix-run/eslint-config": "^1.14.0",
+    "@remix-run/dev": "^1.19.0",
+    "@remix-run/eslint-config": "^1.19.0",
     "@types/bwip-js": "^3.0.0",
     "@types/pluralize": "^0.0.29",
     "@types/react": "^18.0.25",
@@ -39,6 +39,7 @@
     "eslint": "^8.27.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.0.0",
+    "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   },

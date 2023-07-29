@@ -1,4 +1,3 @@
-import { type MetaFunction } from '@remix-run/node'
 import {
 	Form,
 	Links,
@@ -8,6 +7,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from '@remix-run/react'
+import type { LinksFunction, V2_MetaFunction } from '@remix-run/node'
 import { cssBundleHref } from '@remix-run/css-bundle'
 
 import * as typography from './components/typography/typography.css'
@@ -17,20 +17,17 @@ import * as colours from './components/brand/colours.css'
 import { SearchInput } from './components/form/form'
 import './components/global.css'
 
-export function links() {
-	return [{ rel: 'stylesheet', href: cssBundleHref }]
-}
+export const links: LinksFunction = () =>
+	cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []
 
-export const meta: MetaFunction = () => ({
-	charset: 'utf-8',
-	title: 'New Remix App',
-	viewport: 'width=device-width,initial-scale=1',
-})
+export const meta: V2_MetaFunction = () => [{ title: 'Quiver' }]
 
 export default function App() {
 	return (
 		<html lang='en'>
 			<head>
+				<meta charSet='utf-8' />
+				<meta name='viewport' content='width=device-width,initial-scale=1' />
 				<Meta />
 				<Links />
 			</head>

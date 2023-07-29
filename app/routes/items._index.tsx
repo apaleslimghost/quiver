@@ -4,8 +4,8 @@ import { ItemLink } from '~/components/item/link'
 import { Heading } from '~/components/typography/heading'
 import db from '~/lib/db.server'
 import url from '~/lib/url'
-import { ItemFormSchema } from './new'
-import * as container from '../../components/layout/container.css'
+import { ItemFormSchema } from './items.new'
+import * as container from '~/components/layout/container.css'
 import { Button, Form, Input, Select } from '~/components/form/form'
 
 export async function loader() {
@@ -31,11 +31,11 @@ export default function Index() {
 							<ItemLink item={item} />
 						</li>
 					))}
-					{newItem.submission && (
+					{newItem.formData && (
 						<li>
 							<ItemLink
 								item={ItemFormSchema.parse(
-									Object.fromEntries(newItem.submission.formData),
+									Object.fromEntries(newItem.formData),
 								)}
 							/>
 						</li>

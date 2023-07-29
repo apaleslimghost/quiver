@@ -1,7 +1,7 @@
 import { json } from '@remix-run/node'
 import { Form as RemixForm, Link, useLoaderData } from '@remix-run/react'
 import dbServer from '~/lib/db.server'
-import * as container from '../../components/layout/container.css'
+import * as container from '~/components/layout/container.css'
 import { Heading } from '~/components/typography/heading'
 import gridCss from '~/components/layout/grid.css'
 import * as card from '~/components/item/card.css'

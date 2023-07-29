@@ -1,4 +1,4 @@
-import { json } from '@remix-run/node'
+import { V2_MetaFunction, json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { LocationCard } from '~/components/location/card'
 import { Heading } from '~/components/typography/heading'
@@ -16,6 +16,8 @@ export async function loader() {
 
 	return json({ locations, items })
 }
+
+export const meta: V2_MetaFunction = () => [{ title: 'Quiver' }]
 
 export default function Index() {
 	const { locations, items } = useLoaderData<typeof loader>()

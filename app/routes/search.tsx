@@ -1,4 +1,9 @@
-import { type ActionArgs, json, redirect } from '@remix-run/node'
+import {
+	type ActionArgs,
+	json,
+	redirect,
+	V2_MetaFunction,
+} from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import pluralize from 'pluralize'
 import { z } from 'zod'
@@ -11,6 +16,15 @@ import dbServer from '~/lib/db.server'
 const SearchParamsSchema = z.object({
 	q: z.string().optional(),
 })
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => [
+	{
+		title: `Quiver ➳ ${data?.results.length} ${pluralize(
+			'result',
+			data?.results.length,
+		)} for "${data?.q}"`,
+	},
+]
 
 export async function loader({ request }: ActionArgs) {
 	const url = new URL(request.url)

@@ -1,4 +1,4 @@
-import { json, type LoaderArgs } from '@remix-run/node'
+import { json, V2_MetaFunction, type LoaderArgs } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import db from '~/lib/db.server'
 import { z } from 'zod'
@@ -14,6 +14,10 @@ import * as card from '~/components/item/card.css'
 const ItemParamsSchema = z.object({
 	id: z.coerce.number(),
 })
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => [
+	{ title: `Quiver ➳ ${data?.item.name}` },
+]
 
 export async function loader({ params }: LoaderArgs) {
 	const where = ItemParamsSchema.parse(params)
