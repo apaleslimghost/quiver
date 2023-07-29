@@ -1,6 +1,7 @@
-import { useZxing, DecodeHintType } from 'react-zxing'
-import { BarcodeFormat } from '@zxing/library'
 import { useNavigate } from '@remix-run/react'
+import { BarcodeFormat } from '@zxing/library'
+import { useZxing, DecodeHintType } from 'react-zxing'
+
 import url from '~/lib/url'
 
 export default function Scan() {

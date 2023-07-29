@@ -1,20 +1,21 @@
 import type { LoaderArgs, V2_MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useFetcher, useLoaderData } from '@remix-run/react'
-import db from '~/lib/db.server'
-import url from '~/lib/url'
 import { z } from 'zod'
-import * as queries from '~/lib/queries'
-import { ItemFormSchema } from './items.new'
-import { ItemCard } from '~/components/item/card'
 
+import { Breadcrumbs } from '~/components/breadcrumbs'
+import { Button, Form, Input } from '~/components/form/form'
+import { ItemCard } from '~/components/item/card'
+import * as card from '~/components/item/card.css'
 import * as container from '~/components/layout/container.css'
 import grid from '~/components/layout/grid.css'
-import * as card from '~/components/item/card.css'
-import { Button, Form, Input } from '~/components/form/form'
-import { Breadcrumbs } from '~/components/breadcrumbs'
-import { LocationTitle } from '~/components/location/title'
 import { LocationCard } from '~/components/location/card'
+import { LocationTitle } from '~/components/location/title'
+import db from '~/lib/db.server'
+import * as queries from '~/lib/queries'
+import url from '~/lib/url'
+
+import { ItemFormSchema } from './items.new'
 
 const LocationParamsSchema = z.object({
 	id: z.coerce.number(),

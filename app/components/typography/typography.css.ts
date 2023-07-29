@@ -1,4 +1,4 @@
-import { createTheme, globalFontFace, style } from '@vanilla-extract/css'
+import { globalFontFace, style } from '@vanilla-extract/css'
 
 export const family = 'Iosevka Aile'
 

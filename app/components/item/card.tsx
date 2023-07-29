@@ -1,10 +1,11 @@
 import type { Item, ItemLocations } from '@prisma/client'
 import type { FC } from 'react'
+
 import { Heading } from '../typography/heading'
-import { ItemLink } from './link'
+import * as link from '../typography/link.css'
 
 import * as card from './card.css'
-import * as link from '../typography/link.css'
+import { ItemLink } from './link'
 
 export const ItemCard: FC<{
 	item: Partial<Item>

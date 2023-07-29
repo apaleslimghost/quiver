@@ -1,7 +1,8 @@
+import c from '@quarterto/colours'
 import { style } from '@vanilla-extract/css'
 import { readableColor } from 'polished'
+
 import * as colours from '../brand/colours.css'
-import c from '@quarterto/colours'
 
 const base = style({
 	appearance: 'none',

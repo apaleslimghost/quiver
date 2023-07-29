@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, PrismaPromise } from '@prisma/client'
+import type { Prisma, PrismaClient, PrismaPromise } from '@prisma/client'
 import pluralize from 'pluralize'
 
 // type crimes to get the type of a prisma object from its name

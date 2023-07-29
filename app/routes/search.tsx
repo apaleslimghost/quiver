@@ -1,12 +1,9 @@
-import {
-	type ActionArgs,
-	json,
-	redirect,
-	V2_MetaFunction,
-} from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
+import type { V2_MetaFunction, ActionArgs } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import pluralize from 'pluralize'
 import { z } from 'zod'
+
 import { ItemCard } from '~/components/item/card'
 import * as container from '~/components/layout/container.css'
 import gridCss from '~/components/layout/grid.css'

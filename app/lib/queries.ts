@@ -1,5 +1,6 @@
-import db from './db.server'
 import type { Category, Location } from '@prisma/client'
+
+import db from './db.server'
 
 export type ParentModels = {
 	Location: Location

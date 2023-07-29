@@ -1,17 +1,18 @@
-import { LoaderArgs, json } from '@remix-run/node'
+import { type LoaderArgs, json } from '@remix-run/node'
 import { Link, useLoaderData, Form as RemixForm } from '@remix-run/react'
 import { z } from 'zod'
-import { Heading } from '~/components/typography/heading'
-import db from '~/lib/db.server'
-import * as container from '~/components/layout/container.css'
-import * as card from '~/components/item/card.css'
-import url from '~/lib/url'
-import * as queries from '~/lib/queries'
+
 import { Breadcrumbs } from '~/components/breadcrumbs'
-import grid from '~/components/layout/grid.css'
-import { ItemCard } from '~/components/item/card'
 import { Button, Form, Input } from '~/components/form/form'
+import { ItemCard } from '~/components/item/card'
+import * as card from '~/components/item/card.css'
+import * as container from '~/components/layout/container.css'
+import grid from '~/components/layout/grid.css'
+import { Heading } from '~/components/typography/heading'
 import { unstyled } from '~/components/typography/link.css'
+import db from '~/lib/db.server'
+import * as queries from '~/lib/queries'
+import url from '~/lib/url'
 
 const CategoryParamsSchema = z.object({
 	id: z.coerce.number(),

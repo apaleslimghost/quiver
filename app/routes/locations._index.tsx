@@ -1,15 +1,16 @@
 import { json } from '@remix-run/node'
 import { useFetcher, useLoaderData } from '@remix-run/react'
+
+import { Button, Form, Input } from '~/components/form/form'
+import * as card from '~/components/item/card.css'
+import * as container from '~/components/layout/container.css'
+import grid from '~/components/layout/grid.css'
 import { LocationCard } from '~/components/location/card'
+import { Heading } from '~/components/typography/heading'
 import db from '~/lib/db.server'
 import url from '~/lib/url'
-import { LocationFormSchema } from './locations.new'
 
-import * as container from '~/components/layout/container.css'
-import * as card from '~/components/item/card.css'
-import grid from '~/components/layout/grid.css'
-import { Heading } from '~/components/typography/heading'
-import { Button, Form, Input } from '~/components/form/form'
+import { LocationFormSchema } from './locations.new'
 
 export async function loader() {
 	const locations = await db.location.findMany()

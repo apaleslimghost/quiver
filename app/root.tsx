@@ -1,3 +1,5 @@
+import { cssBundleHref } from '@remix-run/css-bundle'
+import type { LinksFunction, V2_MetaFunction } from '@remix-run/node'
 import {
 	Form,
 	Links,
@@ -7,15 +9,14 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from '@remix-run/react'
-import type { LinksFunction, V2_MetaFunction } from '@remix-run/node'
-import { cssBundleHref } from '@remix-run/css-bundle'
 
-import * as typography from './components/typography/typography.css'
-import * as container from './components/layout/container.css'
-import * as background from './components/brand/background.css'
-import * as colours from './components/brand/colours.css'
-import { SearchInput } from './components/form/form'
-import './components/global.css'
+import * as background from '~/components/brand/background.css'
+import * as colours from '~/components/brand/colours.css'
+import { SearchInput } from '~/components/form/form'
+import * as container from '~/components/layout/container.css'
+import * as typography from '~/components/typography/typography.css'
+
+import '~/components/global.css'
 
 export const links: LinksFunction = () =>
 	cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []

@@ -2,8 +2,10 @@ import type { Prisma } from '@prisma/client'
 import { Link } from '@remix-run/react'
 import pluralize from 'pluralize'
 import { Children, type HTMLAttributes } from 'react'
+
 import type { ParentModels } from '~/lib/queries'
 import url from '~/lib/url'
+
 import { breadcrumb, breadcrumbs } from './breadcrumbs.css'
 
 type BreadcrumbProps<T extends keyof ParentModels> = {

@@ -1,7 +1,9 @@
 import type { Location } from '@prisma/client'
 import type { FC, HTMLProps } from 'react'
-import { Heading, type HeadingLevel } from '../typography/heading'
+
 import { AztecCode } from '../aztec-code'
+import { Heading, type HeadingLevel } from '../typography/heading'
+
 import { title, aztec } from './title.css'
 
 export const LocationTitle: FC<

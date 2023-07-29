@@ -1,5 +1,5 @@
 import BwipJs from 'bwip-js'
-import { ComponentProps, FC } from 'react'
+import type { ComponentProps, FC } from 'react'
 
 export const AztecCode: FC<{ data: string } & ComponentProps<'svg'>> = ({
 	data,

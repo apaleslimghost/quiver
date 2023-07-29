@@ -1,14 +1,14 @@
-import { V2_MetaFunction, json } from '@remix-run/node'
+import type { V2_MetaFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
-import { LocationCard } from '~/components/location/card'
+import pluralize from 'pluralize'
+
+import * as card from '../components/item/card.css'
+import * as container from '../components/layout/container.css'
+import grid from '../components/layout/grid.css'
+import * as link from '../components/typography/link.css'
 import { Heading } from '~/components/typography/heading'
 import dbServer from '~/lib/db.server'
-
-import * as container from '../components/layout/container.css'
-import * as card from '../components/item/card.css'
-import * as link from '../components/typography/link.css'
-import grid from '../components/layout/grid.css'
-import pluralize from 'pluralize'
 
 export async function loader() {
 	const locations = await dbServer.location.count()

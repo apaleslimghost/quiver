@@ -1,4 +1,4 @@
-import { FC, HTMLProps } from 'react'
+import type { FC, HTMLProps } from 'react'
 
 import * as heading from './heading.css'
 

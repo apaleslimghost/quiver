@@ -1,12 +1,13 @@
-import { Link } from '@remix-run/react'
 import type { ItemLocations, Location } from '@prisma/client'
+import { Link } from '@remix-run/react'
 import type { FC, PropsWithChildren } from 'react'
-import url from '~/lib/url'
 
+import { Breadcrumbs } from '../breadcrumbs'
 import * as card from '../item/card.css'
 import * as link from '../typography/link.css'
+import url from '~/lib/url'
+
 import { LocationTitle } from './title'
-import { Breadcrumbs } from '../breadcrumbs'
 
 export const LocationCard: FC<
 	PropsWithChildren<{

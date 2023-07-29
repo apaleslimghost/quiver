@@ -1,12 +1,14 @@
 import { json } from '@remix-run/node'
 import { useFetcher, useLoaderData } from '@remix-run/react'
+
+import { Button, Form, Input, Select } from '~/components/form/form'
 import { ItemLink } from '~/components/item/link'
+import * as container from '~/components/layout/container.css'
 import { Heading } from '~/components/typography/heading'
 import db from '~/lib/db.server'
 import url from '~/lib/url'
+
 import { ItemFormSchema } from './items.new'
-import * as container from '~/components/layout/container.css'
-import { Button, Form, Input, Select } from '~/components/form/form'
 
 export async function loader() {
 	const [items, locations] = await Promise.all([

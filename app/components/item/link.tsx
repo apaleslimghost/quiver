@@ -1,6 +1,8 @@
-import { Item } from '@prisma/client'
-import { Link, LinkProps } from '@remix-run/react'
-import { FC, HTMLProps, ReactNode, RefAttributes } from 'react'
+import type { Item } from '@prisma/client'
+import type { LinkProps } from '@remix-run/react'
+import { Link } from '@remix-run/react'
+import type { FC, ReactNode } from 'react'
+
 import url from '~/lib/url'
 
 export const ItemLink: FC<
