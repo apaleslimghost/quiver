@@ -1,5 +1,6 @@
-import { type ActionArgs, json } from '@remix-run/node'
+import { type ActionArgs, json, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import pluralize from 'pluralize'
 import { z } from 'zod'
 import { ItemCard } from '~/components/item/card'
 import * as container from '~/components/layout/container.css'
@@ -15,20 +16,22 @@ export async function loader({ request }: ActionArgs) {
 	const url = new URL(request.url)
 	const { q } = SearchParamsSchema.parse(Object.fromEntries(url.searchParams))
 
-	const results = q
-		? await dbServer.item.findMany({
-				where: {
-					OR: [{ name: { search: q } }, { description: { search: q } }],
-				},
-				orderBy: {
-					_relevance: {
-						fields: ['name', 'description'],
-						search: q,
-						sort: 'desc',
-					},
-				},
-		  })
-		: []
+	if (!q) {
+		return redirect('/')
+	}
+
+	const results = await dbServer.item.findMany({
+		where: {
+			OR: [{ name: { search: q } }, { description: { search: q } }],
+		},
+		orderBy: {
+			_relevance: {
+				fields: ['name', 'description'],
+				search: q,
+				sort: 'desc',
+			},
+		},
+	})
 
 	return json({ results, q })
 }
@@ -39,7 +42,8 @@ export default function SearchPage() {
 	return (
 		<div className={container.area.content}>
 			<Heading level={1}>
-				Results for <em>&ldquo;{q}&rdquo;</em>
+				{results.length} {pluralize('result', results.length)} for{' '}
+				<em>&ldquo;{q}&rdquo;</em>
 			</Heading>
 
 			<div className={gridCss}>
